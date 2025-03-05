@@ -1,0 +1,2756 @@
+---
+title: Investigación Reproducible con R
+subtitle: Workshop Ciencia Abierta
+format:
+  clean-revealjs:
+    self-contained: true
+    theme: slides.scss
+    touch: true
+    slide-level: 2
+author:
+  - name: Eloy Alvarado Narváez
+    orcid: 0000-0001-7522-2327
+    email: eloy.alvarado@usm.cl
+    affiliations: Universidad Técnica Federico Santa María
+  - name: Francisco Plaza-Vega
+    orcid: 0000-0001-7577-2775
+    email: francisco.plaza.v@usach.cl
+    affiliations: Universidad de Santiago de Chile
+date: 07/29/2024
+lang: es
+logo: images/logo_usm.png
+bibliography: refs.bib
+---
+
+# Módulo 1: Introducción a la Investigación Reproducible {background-color="#40666e"}
+
+## ¿Qué es la Investigación Reproducible?
+
+
+![](images/reproducibility.jpg){width=70% fig-align="center"}
+
+::: {.notes}
+Bienvenida
+
+Exploraremos un concepto que está cobrando gran relevancia en la comunidad científica: la Investigación reproducible
+
+Podríamos decir que es el "hacer de nuevo" en la ciencia.
+
+**Decir lo siguiente antes de pasar a reproducibilidad y replicabilidad.**
+
+¿Por qué es importante?
+
+Porque la reproducibilidad es uno de los pilares de la confianza en la ciencia. Permite validar los resultados y asegura que el conocimiento científico es sólido y fiable.
+
+En un mundo ideal, toda investigación sería reproducible, pero en la práctica, nos encontramos con desafíos. Estos pueden incluir desde la disponibilidad y el acceso a los datos originales, hasta la transparencia en los métodos utilizados.
+
+:::
+
+## Investigación Reproducible
+
+::: box1
+Es la práctica de conducir estudios científicos o basados en datos de tal manera que **permita a otros replicar o reproducir los resultados usando los mismos datos, códigos y metodologías**.
+:::
+
+::: {.r-stack}
+::: {.fragment .fade-in-then-out}
+![](images/git_github.png){width=50% fig-align="center"}
+:::
+::: {.fragment .fade-in-then-out}
+![](images/LaTeX_logo.svg.png){width=50% fig-align="center"}
+:::
+::: {.fragment .fade-in-then-out}
+
+::: {layout-ncol=2}
+![](images/R_logo.svg.png){width=30% fig-align="left"}
+
+![](images/RStudio-Logo-Flat.png){width=70% fig-align="right"}
+:::
+:::
+
+::: {.fragment .fade-in-then-out}
+![](images/quarto.png){width=100% fig-align="center"}
+:::
+:::
+
+::: {.notes}
+
+A lo largo de este workshop, vamos a utilizar herramientas como:
+
+- GIT - GitHub: Para mantener el control de versiones de nuestra investigación
+
+- LaTeX: Para la redacción de documentos científicos
+
+- R y RStudio: Para hacer los análisis y como plataforma base
+
+- Quarto: Para integrar análisis y generación de distintos documentos
+
+:::
+
+
+## ¿Qué se entiende por un estudio Reproducible y Replicable? 
+
+### Reproducible
+
+> Los autores entregan todos los datos necesarios y los códigos computacionales para realizar el análisis nuevamente, recreando los resultados.
+
+::: {.notes}
+
+**Reproducible**
+
+> Los autores entregan todos los datos necesarios y los códigos computacionales para realizar el análisis nuevamente, recreando los resultados.
+
+Imaginen que han leído un artículo científico que presenta resultados innovadores. Si quieren verificar estos resultados por ustedes mismos, necesitarán acceder a dos elementos clave: los datos y los códigos computacionales que se utilizaron. Cuando los autores proporcionan estos materiales y cualquier persona con los recursos y la experiencia necesaria puede usarlos para recrear el análisis y llegar a los mismos resultados, decimos que el estudio es reproducible.
+
+**Esto no solo es esencial para validar el trabajo original, sino también para construir sobre él.**
+
+
+**Replicable**
+
+>Un estudio que llega a los mismos hallazgos científicos que otro estudio, recolectando nuevos datos (posiblemente con diferentes métodos) y completando nuevos análisis.
+
+Un estudio es replicable cuando podemos llegar a los mismos hallazgos científicos a través de un nuevo estudio, que ha recolectado nuevos datos, tal vez incluso con diferentes metodologías. Si los hallazgos se mantienen a pesar de estas diferencias, ganamos una mayor confianza en la veracidad y universalidad de los resultados.
+
+
+**La diferencia fundamental entre estos términos radica en la novedad de los datos y los métodos. Mientras que la reproducibilidad se centra en la reutilización de los mismos datos y métodos para verificar los resultados, la replicabilidad implica la generación de nuevos datos y la posible aplicación de nuevos métodos para validar los hallazgos.**
+
+
+> En la era de la Ciencia 2.0, abogamos por una ciencia más transparente y accesible. La capacidad de reproducir y replicar estudios fomenta una investigación más rigurosa y confiable, promueve la innovación y protege contra el sesgo y el error. Al adoptar estos principios, nos movemos hacia un futuro donde la ciencia es abierta por defecto y donde la integridad y la confiabilidad de la investigación son la norma, no la excepción.
+
+Existen grados, categorías o clases de reproduciblidad:
+
+:::
+
+
+### Replicable
+
+> Un estudio que llega a los mismos hallazgos científicos que otro estudio, recolectando nuevos datos (posiblemente con diferentes métodos) y completando nuevos análisis.
+
+
+## Clases de Reproducibilidad
+
+- **Reproducibilidad Computacional**: Cuando se proporciona información detallada sobre el código, *software*, *hardware* y detalles de la implementación
+
+- **Reproducibilidad Empírica**: Cuando se proporciona información detallada sobre experimentos y observaciones científicas empíricas no computacionales. En la práctica, esto se ocurre al hacer que los datos y los detalles de cómo se recopilaron estén disponibles de forma gratuita.
+
+- **Reproducibilidad Estadística**: Cuando se proporciona información detallada, por ejemplo, sobre la elección de pruebas estadísticas, parámetros del modelo y valores de umbral. Esto se relaciona principalmente con el registro previo del diseño del estudio para evitar la práctica de *p-value hacking* y otras manipulaciones.
+
+
+::: {.notes}
+
+- **Reproduciblidad Computacional**: Transparencia completa en lo que respecta al código, software, hardware y los detalles específicos de la implementación.
+
+- **Reproduciblidad Empírica**: Configuraciones y protocolo del experimento realizado.
+
+- **Reproducibilidad estadística**: Proporciona transparencia en la elección de pruebas estadísticas, los parámetros del modelo y los valores de umbral. Es fundamental para abordar problemas como el "p-hacking", donde se manipulan los datos o las pruebas hasta obtener un resultado "significativo".
+
+**Al pre-registrar nuestro diseño de estudio, demostramos que hemos elegido nuestras pruebas estadísticas basadas en un plan preconcebido, no en los datos que surgieron.**
+
+:::
+
+## Reproducibilidad
+
+![](images/reproducible-matrix.jpg){width=70% fig-align="center"}
+
+::: {.notes}
+- **Reproducible**: Un resultado es reproducible cuando los mismos pasos de análisis realizados en el mismo conjunto de datos producen consistentemente la misma respuesta.
+
+- **Replicable**: Un resultado es replicable cuando el mismo análisis realizado en diferentes conjuntos de datos produce respuestas cualitativamente similares.
+
+- **Robusto**: un resultado es rebusto cuando el mismo conjunto de datos se somete a diferentes flujos de trabajo de análisis para responder a la misma pregunta de investigación (por ejemplo, una flujo de trabajo escrito en R y otro escrita en Python) y se produce una respuesta cualitativamente similar o idéntica. Los resultados robustos muestran que el trabajo no depende de las especificidades del lenguaje de programación elegido para realizar el análisis.
+
+- **Generalizable**: la combinación de hallazgos replicables y robustos nos permite formar resultados generalizables. Hay que tener en cuenta que ejecutar un análisis en una implementación de software diferente y con un conjunto de datos diferente no proporciona resultados generalizados. Habrá muchos más pasos para saber qué tan bien se aplica el trabajo a todos los diferentes aspectos de la pregunta de investigación. La generalización es un paso importante para comprender que el resultado no depende de un conjunto de datos en particular ni de una versión particular del código de análisis.
+
+Cuando hablamos de la robustez y la generalización, estamos yendo un paso más allá en nuestra búsqueda de la verdad científica.
+
+**No es solo que otros puedan reproducir lo que hemos hecho o replicar los estudios para obtener los mismos resultados; es también que esos resultados se mantengan bajo nuevas pruebas y en diferentes contextos.**
+
+:::
+
+## Reproducibilidad
+
+![](images/reproducible-definition-grid.svg){width=70% fig-align="center"}
+
+## Ventajas y dificultades
+
+::: {.small}
+| Ventajas | Dificultades |
+|----|----|
+| Historial completo del proyecto | Incentivos limitados |
+| Colaboración y Revisión | Sesgo de las investigaciones hacia hallazgos novedosos |
+| Evita la desinformación | Se aplican mayores estándares a las investigaciones reproducibles |
+| Escritura eficiente | No es considerado para las promociones |
+| Reconocimiento justo | Variabilidad en el rendimiento de los software utilizados |
+| Asegura la continuidad del trabajo | Que una investigación sea reproducible no significa que esté correcta |
+| | Toma más tiempo |
+:::
+
+::: {.notes}
+**Ventajas**
+
+- Historial Completo del Proyecto
+
+>La investigación reproducible debe tener una historia y descripción completa del proceso de planificación y desarrollo del proyecto. Esto incluye información sobre los datos, herramientas, métodos, códigos y documentación utilizados en el proyecto de investigación. Al almacenar un historial completo de nuestro trabajo, podemos garantizar la sustentabilidad de la investigación, el justo reconocimiento y la utilidad de nuestro trabajo.
+
+- Colaboración y Revisión
+
+- Facilita la colaboración y proceso de revisión.
+
+>Al diseñar flujos de trabajo reproducibles y compartirlos con los diferentes equipos de nuestro proyecto de investigación, podemos permitir que otros desarrollen una comprensión profunda de nuestro trabajo. Esto los alienta a revisar nuestros métodos, probar nuestro código, proponer cambios útiles y hacer contribuciones reflexivas para desarrollar aún más nuestro proyecto. Los flujos de trabajo reproducibles facilitan enormemente el proceso de revisión por pares al permitir que los revisores accedan a las diferentes partes de los proyectos que son necesarias para validar los resultados de la investigación.
+
+
+- Evita la desinformación
+
+>La falta de reproducibilidad es uno de los principales factores que conducen a las retractaciones de estudios de investigación. Al trabajar de manera reproducible, podemos desarrollar trabajos de investigación validados, evitar información errónea que pueda limitar la replicabilidad de nuestro trabajo y publicar resultados de investigación precisos
+
+- Escritura eficiente
+
+>Los análisis bien documentados nos ayudan a mantener un fácil acceso a todos los resultados generados dentro de un proyecto que se pueden redactar de manera eficiente. Si trabajan en equipo, los colaboradores pueden obtener fácilmente reconocimiento en términos de autoría por sus contribuciones.
+
+- Reconocimiento justo
+
+>La aplicación de prácticas de reproducibilidad por separado en diferentes partes del proyecto, como datos, códigos y scripts ejecutables de forma independiente, protocolos e informes, permite a otros investigadores probar y reutilizar nuestro trabajo en su investigación y brinda un reconocimiento justo por nuestro trabajo.
+
+- Asegura la continuidad del trabajo
+
+>Al seguir las pautas de reproducibilidad, podemos comunicar fácilmente nuestro trabajo con diferentes partes interesadas. Este aspecto de la reproducibilidad aumenta la utilidad de nuestra investigación al permitir que otros se basen fácilmente en nuestros resultados y reutilicen nuestros materiales de investigación. Esto asegura la continuidad de una idea de investigación e incluso puede encontrar nuevas aplicaciones en otros contextos.
+
+
+**Dificultades en la Investigación Reproducible**
+
+- Incentivos limitados para dar evidencia de las investigaciones
+
+- Sesgo de las investigaciones hacia hallazgos novedosos
+
+> Los resultados novedosos no son necesariamente precisos o interesantes, ¡pero se premian en el mundo académico! Los trabajos que no encuentran relaciones estadísticamente significativas son difíciles de publicar, sobre todo si los resultados no reproducen hallazgos publicados anteriormente. (Eso incluye hallazgos estadísticamente significativos que van en dirección opuesta a trabajos ya publicados).
+
+- No es considerado para promociones
+
+- Variabilidad en el rendimiento de los software utilizados
+
+- Una investigación sea reproducible no significa que esté correcta
+
+- Toma más tiempo
+:::
+
+
+## Etapas de una Investigación Reproducible
+
+![](images/research-cycle.svg){width=70% fig-align="center"}
+
+## Ciencia Abierta
+
+![](images/evolution-open-research.png){width=60% fig-align="center"}
+
+::: {.notes}
+La ciencia abierta u *open science* tiene por objetivo transformar la investigación haciéndola más reproducible, transparente, reutilizable, colaborativa, responsable y accesible para la sociedad. Para que la investigación sea considerada *abierta*, cada elemento del proceso de investigación debe:
+
+- Estar disponible públicamente: es difícil de usar y beneficiarse del conocimiento oculto detrás de barreras como contraseñas y muros de pago.
+
+- Ser reutilizable: los resultados de la investigación deben tener la licencia adecuada, de modo que los posibles usuarios conozcan las limitaciones de la reutilización.
+
+- Sea transparente: con metadatos apropiados para proporcionar declaraciones claras de cómo se produjo el resultado de la investigación y qué contiene.
+:::
+
+## Crisis de la reproducibilidad?
+
+![](images/paper_nature.png){scale=60% fig-align="center"}
+
+["1.500 scientist lift the lid on reproducibility"](https://www.nature.com/articles/533452a) [@baker20161]
+
+::: {.notes}
+Un artículo en Nature del año 2016 sobre la reproducibilidad en la ciencia indica que más del 70% de los investigadores han fallado en reproducir experimentos de otros y más de la mitad en reproducir los suyos. A pesar de la percepción de una crisis de reproducibilidad, la mayoría aún confía en la literatura publicada. Los esfuerzos para mejorar la reproducibilidad varían entre disciplinas y a menudo enfrentan obstáculos como la reticencia de las revistas a publicar replicaciones fallidas. Sin embargo, hay un amplio apoyo para mejorar las prácticas, incluyendo un diseño experimental más robusto y mejor mentoría.
+:::
+
+
+## Difusión y citas
+
+![](images/paper_open_science.png){scale=50% fig-align="center"}
+
+["Point of View: How open science helps researchers succeed"](https://elifesciences.org/articles/16800) [@mckiernan2016open]
+
+
+::: {.notes}
+En el 2016 se efectuó un estudio ([McKiernan et al 2016](https://elifesciences.org/articles/16800)) en donde se muestra el *índice de citación relativa* que corresponde a la tasa de citaciones medias para artículos publicados en revistas científicas de  ciencia abierta versus las citaciones para revistas. Esto para 19 disciplinas de la ciencia.
+
+Acá podemos ver que los artículos puiblicados como ciencia abierta tienen hasta casi 3 veces el número de citas que los que no son de ciencia abierta. En la parte superior del gráfico, para ciencias aplicadas y física.
+
+:::
+
+
+
+## Datos Abiertos
+
+Solo una proporción muy pequeña de los datos originales se publica en revistas convencionales o investigaciones públicas. A pesar de las políticas existentes sobre el archivo de datos, en la actualidad, los datos se almacenan principalmente en archivos privados, no en repositorios institucionales seguros, y se pierde a ellos por parte del público general.
+
+Esta falta de intercambio de datos es un obstáculo para la investigación internacional (ya sea académica, gubernamental o comercial) por dos razones principales:
+
+- Generalmente es difícil o imposible reproducir un estudio sin los datos originales.
+
+- Los datos no pueden ser reutilizados o incorporados en nuevos trabajos por otros investigadores si no pueden acceder a ellos.
+
+## Barreras para el intercambio de datos
+
+![](images/data-privacy.png){width=70% fig-align="center"}
+
+::: {.notes}
+Muchos investigadores encuentran difícil compartir datos. Encuestas recientes realizadas entre investigadores enumeran las siguientes razones:
+
+- Organizar los datos de una manera presentable y útil es un desafío (mencionado por el 46 %)
+
+- Los investigadores no están seguros acerca de los derechos de autor y las licencias (mencionado por el 37 %)
+
+- Los investigadores no saben qué repositorio usar para diferentes tipos de datos (aumento del 33 %)
+
+
+**Y en este sentido, para ayudar a solucionar estas brechas, podemos utilizar software de código abierto**
+:::
+
+
+## Software de Código abierto
+
+> Cuando un proyecto es de código abierto, cualquiera puede ver, usar, modificar y distribuir el proyecto para cualquier propósito. Estos permisos se aplican a través de una licencia de código abierto
+
+**¿Cómo los software de código abierto benefician la investigación?**
+
+
+
+::::{.columns}
+
+:::{.column}
+
+- **Re-usable**
+
+- **Comprobable**
+
+- **Colaborativo**
+
+:::
+
+:::{.column}
+
+![](images/tidylogo.png){width=60% fig-align="center"}
+:::
+::::
+
+::: {.notes}
+Vamos a hablar un poco respecto a herramientas para la investigación reproducible
+
+**Re-usable**: Permite a los investigadores tener ventaja del trabajo adelantado de los demás. A muchos nos ha pasado que no podemos implementar algún código y buscamos en internet en sitios como stack-exchange o stack-overflow, GitHub, etc. El principio es "para qué inventar la rueda, si alguien ya logró inventarla", mejor construir sobre lo ya desarrollado y adaptarlo a nuestro contexto
+
+**Comprobable**: Donde los proyectos pueden permitir a la comunidad el poder leer los códigos y hacer pruebas de su funcionamiento. De esta manera encontrar y corregir errores más rápido y de la misma forma, otros investigadores pueden validar sus resultados
+
+**Colaborativo**: Además de los puntos anteriores, que ya lo hacen colaborativo. Permite trabajar en proyectos mucho más demandantes, que no podrían ser llevados a cabo por un sólo investigador. Hay ejemplos de desarrollos como por ejemplo las librerías de python como scipy o numpy, o el mismo tensorflow que es ampliamente utilizado en machine learning y deep learning.
+:::
+
+
+
+
+## Espectro de Reproducibilidad
+
+![](images/Reproducible.png){width=60% fig-align="center"}
+
+::: {.notes}
+La imagen muestra la clasificacion de los distintos tipos de investigación científica en un rango que va desde "No reproducible" hasta el "Estándar de oro". En el extremo izquierdo del espectro se encuentra sólo la publicación, indicando un nivel bajo de reproducibilidad. A medida que avanzamos en el espectro, se agregan componentes adicionales que mejoran la reproducibilidad: "Código", "Código y datos", y luego "Código y datos vinculados y ejecutables". El "Estándar de oro" al final del espectro muestra la "Replicación completa", implicando la máxima reproducibilidad. Este espectro destaca la importancia de compartir no solo las publicaciones, sino también el código y los datos subyacentes para permitir la verificación y replicación completas de los resultados científicos.
+:::
+
+# [Repositorio para este curso](https://github.com/FranPlaza/workshop_inv_rep_r_v2)
+
+# Sofware necesarios
+
+## R project
+
+![](images/R_logo.svg.png){width=40% fig-align="center"}
+
+[https://cran.dcc.uchile.cl/](https://cran.dcc.uchile.cl/)
+
+## RSudio IDE
+
+![](images/RStudio-Logo-Flat.png){width=60% fig-align="center"}
+
+[https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+
+> Existen otras alternativas más *génericas* como [Visual Studio Code](https://code.visualstudio.com/), un editor de código para múltiples lenguajes. Sin embargo, al no ser un software especializado en R, requiere utilizar extensiones para lograr las funcionalidad que otorga RStudio.
+
+## Quarto
+
+![](images/quarto.png){width=50% fig-align="center"}
+
+[https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+
+## Git & Github
+
+![](images/git_github.png){width=45% fig-align="center"}
+
+- Cuenta en [GitHub](https://github.com/)
+
+- [Git](https://git-scm.com/downloads)
+
+- [Github CLI](https://cli.github.com/)
+
+- [Github Desktop](https://desktop.github.com/)
+
+
+# Módulo 2: Control de versiones {background-color="#40666e"}
+
+## Control de versiones
+
+![](images/project-history.svg){width=45% fig-align="center"}
+
+::: {.notes}
+
+No importa cómo esté organizado el grupo de trabajo, siempre se necesitará gestionar algún conjunto de documentos de trabajo compartidos. La gestión de cambios o revisiones a cualquier tipo de información realizada en un archivo o proyecto se llama **control de versiones**
+
+Como lo vimos en el módulo anterior, la reproducibilidad necesita la provisión del código y los datos que se utilizaron para producir, por ejemplo, una figura. En la práctica, los datos y el código se modifican regularmente y es necesario registrar qué se cambió y cuándo, para proporcionar información de procedencia. Como veremos en este capítulo, el control de versiones tiene muchas otras ventajas, lo que explica por qué la mayoría de los proyectos de ciencia de datos se alojan en plataformas Git.
+
+El control de versiones es un enfoque para registrar cambios realizados en un archivo o conjunto de archivos a lo largo del tiempo, de modo que los colaboradores puedan rastrear su historial, revisar cualquier cambio y revertir o volver a versiones anteriores. La gestión de cambios o revisiones a cualquier tipo de información realizada en un archivo o proyecto se llama versionado. Por ejemplo, al escribir un artículo con múltiples colaboradores, el control de versiones puede ayudar a rastrear qué cambios se hicieron, quién los hizo y qué actualizaciones se realizaron.
+
+:::
+
+## Git
+
+:::box1
+**Sistema de control de versiones distribuido que se utiliza para el seguimiento de cambios en archivos de desarrollo software.**
+:::
+
+
+![](images/version-control.svg){width=45% fig-align="center"}
+
+::: {.notes}
+Muchos de nosostros quizás hemos trabajado en microsoft word usando el famoso **Control de Cambios**.
+
+Los diferentes sistemas de control de versiones pueden utilizarse a través de programas con interfaces gráficas de usuario, aplicaciones basadas en navegadores web o herramientas de línea de comandos. Herramientas como Google Drive y Dropbox ofrecen plataformas para actualizar archivos y compartirlos con otros en tiempo real de manera colaborativa. Sistemas de control de versiones más sofisticados existen dentro de herramientas como **Google Docs** o **HackMD**. Estos permiten a los colaboradores actualizar archivos mientras almacenan cada versión en su historial de versiones (lo discutiremos en detalle). Sistemas avanzados de control de versiones (VCS) como Git, Mercurial y SVN proporcionan herramientas mucho más poderosas. Acceder al historial de versiones y mantener el control sobre la versión principal de tus archivos son características particulares de estas herramientas avanzadas.
+
+Las prácticas de versionado provienen principalmente de la gestión de cambios en los repositorios de código. Sin embargo, en realidad, puedes usar el control de versiones para casi cualquier tipo de archivo en un ordenador. Más adelante en este capítulo, discutiremos el control de versiones para datos y otros archivos de proyectos de investigación, lo cual se puede aplicar para realizar un seguimiento de las revisiones de grandes cantidades de datos. Es útil saber que los datos pueden ser volátiles y versionarlos puede mejorar la reproducibilidad de tus análisis científicos.
+:::
+
+
+## Motivación para utilizar control de versiones
+
+- Es primordial para seguir la procedencia de la información.
+
+- Crea versiones históricas que nos permiten entender que cambios fueron realizados.
+
+- Facilita el manejo de distintas versiones de archivos.
+
+- Permite seguir y combinar cambios realizados por distintas personas.
+
+::: {.notes}
+
+- Debido a que los datos y el código de análisis evolucionan con el tiempo, puede volverse muy difícil o incluso imposible saber qué versión del código y qué versión de los datos se utilizó para producir una figura en particular. Esta información de procedencia se habilita y facilita cuando tanto los datos, el código como los archivos de las figuras están bajo versionado.
+
+- El control de versiones crea un historial de versiones que nos ayuda a entender qué cambios se hicieron, o por qué se realizó un análisis específico, incluso semanas o meses después. Con la ayuda de comentarios y mensajes de commit en Git, por ejemplo, cada versión puede explicar qué cambios contiene en comparación con las versiones anteriores. Esto es útil cuando compartimos nuestro análisis (no solo datos) y lo hacemos auditable o reproducible, lo cual es una buena práctica científica.
+
+- Un sistema de control de versiones oculta ordenadamente las versiones anteriores de los datos. Así, tu directorio de trabajo no está desordenado por los restos de versiones anteriores, mientras que estas siguen siendo accesibles, en caso de que las necesites. De manera similar, con el control de versiones, no hay necesidad de dejar fragmentos de código sin usar por si alguna vez necesitas volver a una versión antigua.
+
+- Finalmente, el control de versiones es invaluable para proyectos colaborativos donde diferentes personas trabajan simultáneamente en los mismos datos o código y construyen sobre el trabajo de los demás. Utilizando un sistema de control de versiones, los cambios realizados por diferentes personas pueden rastrearse y a menudo combinarse automáticamente, ahorrando una gran cantidad de esfuerzos manuales meticulosos. Usar el control de versiones en tu proyecto de investigación significa que tu trabajo es más transparente. Debido a que todas tus acciones están registradas, tus estudios son más fáciles de reproducir y ampliar. Además, los servicios de alojamiento de control de versiones como GitHub, GitLab y otros proporcionan una forma de comunicarse y colaborar de manera más estructurada, como en solicitudes de extracción, revisiones de código y problemas.
+:::
+
+## Flujo de trabajo
+
+> El control de versiones es un **enfoque sistemático** para registrar los cambios realizados en un archivo o conjunto de archivos a lo largo del tiempo.
+
+---
+
+Un flujo de trabajo típico para usar control de versiones es:
+
+1. **Crear archivos**
+2. **Trabajar sobre estos archivos**
+3. **Crear un *snapshot* del estado del archivo** (también llamado versión)
+4. **Documentar que cambios fueron realizados en el historial de la versión del archivo**
+
+. . .
+
+![](images/main-branch.png){width=55% fig-align="center"}
+
+## Elementos de Git
+
+- **Repositorio**: Lugar donde se almacenan todos los archivos, carpetas e historial del proyecto.
+
+- **Commit**: Registro de los cambios realizados en los archivos del proyecto en un momento específico.
+
+- **Ramas (o "Branches")**: Espacios de trabajo independientes del desarrollo principal.
+
+- **Fusiones (o "Merges")**: Representa la acción de incorporar los cambios de una Rama (Branch) a otra.
+
+- **Repositorios remotos**: Copias del repositorio almacenadas en un servidor central o en otros equipos.
+
+## Repositorio
+
+:::: {.columns}
+:::{.column}
+El **Repositorio** de un proyecto corresponde al almacén de datos que contiene todos los archivos, carpetas y el historial de cambios del proyecto. 
+
+
+
+:::
+
+
+::: {.column}
+![](images/repositorio.png){width=30% fig-align="center"}
+:::
+
+::::
+
+::: box1
+Un repositorio de Git puede estar:
+
+- Estar ubicado localmente en la computadora de un desarrollador.
+
+- De forma remota en un servidor. 
+:::
+
+::: {.notes}
+La principal característica de Git es que cada desarrollador que trabaja en el proyecto tiene una copia completa del repositorio en su máquina local, lo que permite que trabajen de manera independiente y sin conexión continua al servidor central. Esto es lo que se conoce como un sistema de control de versiones distribuido.
+
+El repositorio de Git almacena toda la historia de revisiones o "commits" realizados en el proyecto, lo que permite retroceder en el tiempo y ver cómo ha evolucionado el código. Cada commit contiene información sobre los cambios realizados, quién los hizo y cuándo se realizaron.
+
+Los repositorios de Git facilitan la colaboración en equipos de desarrollo, ya que permiten que varios desarrolladores trabajen en diferentes características o soluciones de errores en paralelo sin interferir entre sí. Luego, estos cambios pueden combinarse o "fusionarse" para crear una versión final del proyecto que incorpore todas las contribuciones.
+:::
+
+
+
+## Ramas (Branches)
+
+::: box1
+Supongamos que quiero agregar o probar algo nuevo en un archivo antes de que se vea reflejado en archivo principal. ¿Cómo puedo mantener un registro de esto?
+:::
+
+. . .
+
+![](images/one-branch.png){width=80% fig-align="center"}
+
+. . .
+
+![](images/two-branches.png){width=80% fig-align="center"}
+
+## Sub-ramas (Sub-Branches)
+
+![](images/sub-branch.png){width=80% fig-align="center"}
+
+## ¿Cómo uso Git y Github?
+
+::: box1 
+Si deseamos tener una control de versión **LOCAL**, debemos crear un proyecto en RStudio
+:::
+
+::: {.notes}
+
+Acá veremos el esquema general del como crear un proyecto para hacer control de versiones.
+
+Esto lo veremos en detalle un poco más adelante con un ejemplo para que ustedes también puedan replicarlo.
+
+:::
+
+## Conectar RStudio con Github
+
+Para guardar nuestras versiones en Github debemos seguir los siguientes pasos:
+
+1. Crear un token de acceso personal (PAT) en Github
+
+```{r}
+#| eval: false
+library(usethis)
+usethis::create_github_token()
+```
+2. Almacener el token de acceso personal (PAT) 
+
+```{r}
+#| eval: false
+library(gitcreds)
+gitcreds::gitcreds_set()
+```
+
+3. Crear repositorio en Github (via web o aplicación de escritorio)
+
+4. Crear nuevo proyecto (Versión de control > Git >  URL del repositorio)
+
+## Push & Pull
+
+![](images/git-push.png){width=80% fig-align="center"}
+
+## Git para proyectos de investigación
+
+![](images/healthy-research-tree.jpg){width=60% fig-align="center"}
+
+- **Versiones para conjuntos de datos, requieren especial cuidado**
+- **Estructura de carpetas específician ayudan en el flujo de trabajo**
+
+. . .
+
+:::box2
+[Introducción a git](https://learngitbranching.js.org/?locale=es_ES)
+:::
+
+
+::: {.notes}
+**Potencial: ** lista de características que un flujo de trabajo con Git/GitHub aporta a los proyectos de ciencia de datos y que serían útiles para proyectos de investigación:
+
+1. Respaldar datos empujándolos a una plataforma Git, hacia un repositorio público o privado.
+2. Usar fácilmente diferentes computadoras para trabajar en el mismo proyecto (contigo o con colaboradores).
+3. Llevar un registro de contribuciones.
+4. Facilitar el uso de plantillas de carpetas para ayudar con la organización de archivos, ver Organización de Datos.
+5. Usar herramientas de plataformas Git para la gestión de proyectos.
+6. Utilizar plataformas Git para divulgación, incluso cuando el repositorio es privado (usando la Wiki).
+7. Crear un sitio web asociado bajo la misma organización en la plataforma Git.
+
+**Problemas**: Git no funciona bien cuando hay muchos datos o cuando los datos son grandes. Cuando se espera que el proyecto sea grande, es necesario establecer una herramienta diferente para evitar crear repositorios poco prácticos. Algunas de estas herramientas dificultan el acceso o la visualización de tus archivos, por lo que es importante planificar con anticipación qué herramienta se adapta mejor a tus necesidades. 
+
+**Interactive_visual_Git**
+Uno de los mayores desafíos para comenzar con Git puede ser comprender la estructura de archivos y directorios y la complejidad de las ramas, commits y remotos, y cómo interactúan, particularmente en la línea de comandos con representaciones visuales limitadas. A menudo es confuso, incluso para usuarios avanzados, traducir de un diagrama conceptual a los comandos Git correctos necesarios para lograr los resultados deseados.
+
+La herramienta LearnGitBranching ofrece una introducción interactiva y visual a Git. Esta herramienta interactiva basada en navegador incluye tutoriales y te permite practicar el uso de Git a través de un “repositorio” virtual y un área de pruebas. Al completar los desafíos integrados, familiarizarse con los comandos de Git se convierte más en un juego que en una tarea.
+
+:::
+
+## Estructura de un repositorio
+
+![](images/file-management-manual.jpg){width=60% fig-align="center"}
+
+- [Open Science Framework](https://osf.io/4sdn3/)
+
+ 
+::: {.notes}
+Por ejemplo, Open Science Framework, es una plataforma de código abierto para administración de proyectos de investigación.
+:::
+
+
+## Conectar RStudio y Github
+
+1. Crear una cuenta en [GitHub](https://github.com/)
+2. Crear un token de acceso personal (PAT) en GitHub
+
+. . .
+
+```{r}
+#| echo: true
+#| eval: false
+library(usethis)
+create_github_token()
+```
+3. Almacenar credenciales
+
+. . .
+
+```{r}
+#| echo: true
+#| eval: false
+library(gitcreds)
+gitcreds::gitcreds_set()
+```
+
+## RStudio 
+
+1. Tener un proyecto local
+2. Realizar un *commit* inicial
+3. Escribir:
+
+. . .
+
+```{r}
+#| echo: true
+#| eval: false
+library(usethis)
+usethis::use_github()
+```
+Esto creará un repositorio con el nombre del proyecto
+
+4. Utilizando la interface en RStudio, podremos mantener el control de versiones.
+
+## Control de versiones para datos
+
+![](images/data-provenance.jpg){width=60% fig-align="center"}
+
+::: {.notes}
+
+Hablamos de que controlar las versiones de los componentes de proyectos en evolución podría ayudar a hacer el trabajo más organizado, eficiente, colaborativo y reproducible. Sin embargo, muchos proyectos científicos no solo contienen código, manuscritos u otros archivos de tamaño pequeño, sino que contienen archivos más grandes como grandes conjuntos de datos, resultados de análisis o archivos binarios (presentaciones, manuscritos, PDFs) que pueden cambiar o actualizarse en un proyecto al igual que otros componentes de texto de tamaño pequeño. En este capítulo, discutimos por qué y cómo hacer versionado de datos, especialmente por qué Git no es adecuado para el versionado de datos y qué se puede hacer al respecto.
+
+:::
+
+
+
+## Importancia del control de versiones para datos
+
+- Los datos utilizados en los análisis **no son estáticos**
+
+- Los datos pueden mutar **no sólo** debido a que se ingresa nueva información
+
+- En muchas investigaciones se desea experimentar con diferentes versiones del mismo conjunto de datos
+
+- Controlar las versiones de conjuntos de datos o de archivos grandes ayuda a la reproducibilidad de un proyecto
+
+## Desafíos en el control de versiones para datos
+
+La principal limitación que tiene [Git](https://git-scm.com/) es que conforme la cantidad y tamaño de los archivos en el proyecto crecen, se vuelve impracticable el control de versiones.
+
+- Usualmente un repositorio se considera *grande* cuando su tamaño es sobre 1 TB
+
+## Herramientas en el control de versiones para datos
+
+Entre las herramientas más usadas para el control de versiones para grandes archivos están:
+
+- [Data Version Control](https://dvc.org/): Particularmente útil cuando se trabaja con muchos modelos, pues puede registrar el desempeño de modelos pre-establecidos *commit* tras *commit*.
+
+. . .
+
+![](images/dvc.png){width=25% fig-align="center"}
+
+--- 
+
+- [Git Large File Storage](https://git-lfs.com/): Tal como Git, pero desarrollado para ser escalable.
+
+. . .
+
+![](images/glfs.png){width=40% fig-align="center"}
+
+## Administración de datos de investigación
+
+> El estándar para investigaciones reproducibles es que los datos cumplan con los principios **FAIR**
+
+
+![](images/data-ecosystem.svg){width=40% fig-align="center"}
+
+## FAIR
+
+["The FAIR Guiding Principles for scientific data management and stewardship"](https://www.nature.com/articles/sdata201618)
+
+![](images/fair-principles.svg){width=40% fig-align="center"}
+
+:::{.notes}
+Localizable: ¡El primer paso para (re)utilizar datos es encontrarlos! Los metadatos descriptivos (información sobre los datos, como palabras clave) son esenciales.
+
+Accesible: una vez que el usuario encuentra los datos y el software, necesita saber cómo acceder a ellos. Los datos podrían estar disponibles abiertamente, pero también es posible que sean necesarios procedimientos de autenticación y autorización.
+
+Interoperable: los datos deben integrarse con otros datos e interoperar con aplicaciones o flujos de trabajo.
+
+Reutilizable: los datos deben estar bien descritos para que puedan usarse, combinarse y ampliarse en diferentes entornos.
+:::
+
+
+# Módulo 3: Ambientes reproducibles {background-color="#40666e"}
+
+
+## Ambientes reproducibles
+Cada computador es un ambiente computacional **único** que consiste de un sistema operativo, los *softwares* instalados, sus respectivas versiones entre otras características.
+
+. . .
+
+::: box1
+Supongamos que un proyecto de investigación se lleva a cabo en un computador pero luego se transfiere a un computador diferente. No habrá una garantía que el análisis podrá ser realizado o que generará los mismos resultados si estos dependen de algunas de las características mencionadas.
+:::
+
+**Para que una investigación sea reproducible, el ambiente computacional en el que se conduce debe poder ser replicado.**
+
+## ¿Qué es un ambiente computacional?
+
+> En términos generales, un ambiente computacional es un sistema donde un programa se ejecuta. Esto incluye las características de *hardware* y *software*
+
+Replicar los ambientes computacionales tendrá un potencial impacto en:
+
+- Investigadores
+
+- Colaboradores
+
+. . .
+
+![](images/piramid.png){width=40% fig-align="center"}
+
+::: {.notes}
+**Investigadores**
+Los entornos de trabajo de los investigadores va cambiando en la medida que los software se van actualizando, si es que instalan nuevo software o  usan distintos computadores, por ejemplo. Si no se logra capturar el ambiente que contiene el proyecto y los investigadores necesitan volver a su proyecto después de meses o años (como es común en la investigación), no van a poder replicar los resultados o no podrán tener la suficiente confianza que los resultados son los mismos. No van a tener forma de saber qué cambios se han producido en un ambiente de investigación específico y qué impacto podrían tener esos cambios en su capacidad para ejecutar el código y en los resultados.
+
+**Colaboradores**
+Como estamos en un entorno de colaboración, y al trabajar en varios ambientes computacionales abre una posibilidad no menor de encontrar muchos  errores. Entonces, el tratar de solucionar este tipo de problemas puede ser ser un proceso bastante lento y frustrante, sobre todo si los investigadores tienen que averiguar cuáles son las diferencias entre los ambientes computacionales de cada uno y lo que puede causar los errores. En este sentido, algunos errores pueden no ser detectados y pueden afectar potencialmente los resultados.
+
+**Pirámide**
+La imagen muestra una pirámide que está dividida en cuatro niveles que representan diferentes componentes de un proyecto de investigación. La base de la pirámide, el "Ambiente", es la base sobre la que se construye todo el proyecto. Justo encima, hay dos bloques que forman el segundo nivel: "Código" y "Datos", que son esenciales para el proceso de investigación y están apoyados por el ambiente subyacente. El tercer nivel tiene que ver con la "Documentación", que abarca los dos bloques inferiores. Y finalmente, en la cima de la pirámide se encuentra "Artículo", lo que  p representa la meta final de la investigación, que es publicar un artículo científico.
+:::
+
+
+## Capturando el ambiente computacional
+
+### Categorías:
+
+![](images/computational-environments.jpg){width=60% fig-align="center"}
+
+::: {.notes}
+Hay varias maneras de capturar entornos computacionales. Acá mostramos algunos Sistemas de Gestión de Paquetes, Binder, Máquinas Virtuales y Contenedores. Cada uno tiene sus ventajas y desventajas, y la opción más apropiada va a depender de la naturaleza del  proyecto.
+
+Podemos dividirlos en dos categorías: aquellos que capturan solo el software y sus versiones usados en un entorno (Sistemas de Gestión de Paquetes de ANACONDA), y aquellos que replican un entorno computacional completo, incluyendo el sistema operativo y configuraciones personalizadas (Máquinas Virtuales y Contenedores).
+
+Otra forma de clasificarlos es por cómo se presenta la investigación reproducida al que la reproduce. Usar Binder o una Máquina Virtual crea un resultado mucho más gráfico, del tipo GUI. En cambio, los resultados de Contenedores y Sistemas de Gestión de Paquetes de ANACONDA se interactúan más fácilmente a través de la línea de comandos.
+:::
+
+## Sistema de admininistración de paquetes
+
+::: box3
+Los sistemas de administración de paquetes son herramientas usadas para instalar y mantener un seguimiento del software usado en un sistema. Los archivos utilizados pueden ser compartidos con otros para que repliquen el ambiente computacional.
+:::
+
+Ejemplos: 
+
+- [Conda](https://conda.io/)
+- [Posit Package Manager](https://posit.co/products/enterprise/package-manager/)
+- [Metrum Package Network](https://mpn.metworx.com/docs/) via [pkgr](https://github.com/metrumresearchgroup/pkgr)
+- [Packrat](https://rstudio.github.io/packrat/)
+- [Renv](https://rstudio.github.io/renv/articles/renv.html)
+
+## Binder
+
+::: box3
+Binder es un servicio que genera versiones funcionales de proyecto desde un **repositorio git** y los sube a la nube. Estos proyectos "binderizados" son accesibles desde un navegador de internet.
+:::
+
+Binder requiere que el software (y óptimamente, sus versiones) necesario para ejecutar un proyecto sea especificado.
+
+![](images/featured.png){width=60% fig-align="center"}
+
+
+## Máquinas virtuales
+
+::: box3
+Las máquinas virtuales son **computadores simulados**. Un usuario puede crear un computador *"virtual"* fácilmente, especificando el sistema operativo que quieren tener, entre otras características, y ejecutarlo como cualquier otra aplicación.
+:::
+
+![](images/Virtualbox_logo.png){width=30% fig-align="center"}
+
+## Contenedores
+
+::: box3 
+Los contenedores proveen muchos de los beneficios de una máquina virtual, pues esencialmente actúan como máquinas independientes que contienen sus propios archivos, *softwares* y configuraciones.
+
+La diferencia radica en que una máquina virtual incluye un sistema operativo junto con sus *softwares*, independientemente si el proyecto los utiliza. En cambio, los contenedores sólo incluyen el *software* y archivos explícitamente definidos para ejecutar un proyecto particular.
+:::
+
+![](images/docker-logo.png){width=30% fig-align="center"}
+
+## Ejemplos: Renv
+
+1. Creamos un nuevo proyecto
+2. Seleccionamos la opción de utilizar `renv` en el nuevo proyecto
+3. Alternativamente podemos utilizar el comando `renv::init()` para proyectos existentes
+4. Trabajamos en el código, instalando o sacando paquetes conforme sea necesario
+5. Usamos el comando `renv::snapshot()` para capturar el ambiente
+
+- El comando `renv::init()` tendremos opciones para restaurar, descartar o activar el ambiente computacional
+- El comando `renv::dependencies()` nos entrega los paquetes de los cuales depende nuestro proyecto.
+
+
+## Ejemplos: Conda
+
+1. Instalar [Anaconda](https://www.anaconda.com/)
+2. Seleccionar pestaña *Environment*
+3. Crear ambiente de proyecto (R, Python o ambos)
+4. Utilizar RStudio desde anaconda.
+
+. . .
+
+![](images/Anaconda_Logo_RGB_Corporate_stacked_300x225_2x-1.png){width=40% fig-align="center"}
+
+## BinderHub
+
+![](images/binderhub.svg){width=60% fig-align="center"}
+
+::: {.notes}
+BinderHub, usa tecnología en la nube que es la queda vida a Binder. 
+
+La arquitectura de BinderHub a grosso modo. BinderHub junta todas las herramientas tecnológicas que trabajan en armonía para crear entornos de computación personalizados y listos para usar en la nube. Acá se puede configurar todo el ambiente necesario para que el proyecto funcione como corresponda. Se necesitan algunos recursos, claro, como buen espacio en la nube, un poco de conocimiento en tecnologías de contenedores y  configuración.
+:::
+
+## Caso práctico
+
+::: box1
+
+Generaremos un proyecto desde cero que tenga las siguientes características:
+
+- Repositorio en Github
+- Código de R + Administrador de paquetes
+
+:::
+
+
+# Módulo 4: Herramientas básicas {background-color="#40666e"}
+
+
+# LaTeX
+
+![](images/LaTeX_logo.png){width=60% fig-align="center"}
+
+
+## ¿Que es LaTeX?
+
+**Software de composición de textos**
+
+::: box1
+-   **Consiste en un software de uso libre**, capaz de generar documentos escritos de alta calidad.
+
+-   **Le da prioridad a la estructura lógica del texto**, permitiendo mantener una mayor trazabilidad y orden en el contenido.
+
+-   **Se utiliza ampliamente en el contexto de artículos y documentación científica**, debido a su facilidad para trabajar formulas matemáticas.
+:::
+
+## LaTeX vs Word
+
+![](images/word_vs_latex_1_esp.png){width="70%" fig-align="center"}
+
+## LaTeX vs Word
+
+::: {.small}
+
+|     Categoría    |                                                   MS Word                                                  |                                        LaTeX                                        |
+|:----------------:|:----------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------:|
+| Facilidad de uso |                                         Relativamente fácil de usar                                        | Difícil de aprender. Fácil una vez que se entiende la estructura de los documentos. |
+|    Eficiencia    |                               Excelente para documentos cortos. No escalable.                              |      OK para documentos cortos. Excelente para documentos técnicos y extensos.      |
+|      Calidad     | Es posible redactar documentos bien formateados, pero requiere mucho tiempo dada las limitaciones de word. |                    Fácil creación de documentos bien formateados.                   |
+|  Características |                                           Herramientas limitadas.                                          |                         Muchas herramientas vía extensiones.                        |
+|      Precio      |                         De pago, pero existen alternativas gratis como Google Docs.                        |                                 Gratis (Open-source)                                |
+
+:::
+
+## Instalación de LaTeX
+
+**$\LaTeX$ local:**
+
+- [MiKTEX](https://miktex.org/): ![](images/AppIcon.svg){.absolute width=40% top="70" right="70"}
+
+- [TexLive](https://tug.org/texlive/): ![](images/20062137.png){.absolute width=30% bottom="80" left="100"}
+
+## Instalación de LaTeX
+
+**$\LaTeX$ online:**
+
+- [Overleaf](https://www.overleaf.com/): ![](images/overleaf.png){.absolute width=40% top="70" right="70"}  
+
+- [Papeeria](https://papeeria.com/):  ![](images/papeeria.png){.absolute width=30% bottom="80" left="100"}
+
+## Usos de Latex
+
+- **Documentos Académicos**
+
+- **Libros y Revistas**
+
+- **Presentaciones**
+
+- **Documentos Técnicos**
+
+- **Documentos Matemáticos y Científicos**
+
+- **Cartas y Documentos Formales**
+
+- **Generación Automatizada de Documentos**
+
+::: {.r-stack}
+::: {.fragment .fade-in-then-out}
+::: box2
+Ofrece flexibilidad, manteniendo un formato coherente y formal, además de tener la capacidad de gestionar referencias cruzadas, bibliográficas y fórmulas matemáticas.
+:::
+:::
+:::
+
+::: notes
+**Documentos Académicos**: Ideal para escribir artículos de investigación, tesis, disertaciones y trabajos académicos en general. Su capacidad para gestionar referencias cruzadas, bibliográficas y fórmulas matemáticas lo convierte en una opción ideal para proyectos académicos complejos.
+
+**Libros y Revistas**: Muchos autores y editoriales utilizan LaTeX para la composición de libros, manuales técnicos y revistas científicas debido a su flexibilidad y capacidad para mantener un formato coherente y profesional.
+
+**Presentaciones**: Si bien el formato más común para las presentaciones es PowerPoint, LaTeX ofrece una alternativa con alta calidad tipográfica para crear diapositivas utilizando la clase "beamer".
+
+**Documentos Técnicos**: LaTeX es utilizado para crear documentos técnicos como informes, manuales, documentación de software y guías de usuario debido a su capacidad para estructurar y formatear el contenido de manera clara y coherente.
+
+**Documentos Matemáticos y Científicos**: LaTeX es muy apreciado en la comunidad científica debido a su excelente soporte para notación matemática y símbolos especiales. Es ampliamente utilizado en campos como matemáticas, física, ingeniería y ciencias de la computación.
+
+**Cartas y Documentos Formales**: LaTeX permite crear cartas y documentos formales con un diseño profesional y elegante.
+
+**Generación Automatizada de Documentos**: Algunas personas utilizan LaTeX para generar automáticamente informes y documentos con datos variables a partir de bases de datos o sistemas externos.
+
+:::
+
+## Herramientas para escribir en LaTeX
+
+Definidos como **Editores de texto**, consisten en la aplicación que le permite a un usuario escribir el LaTeX.
+
+::: box2
+
+- **Editores de Latex**: Creados exclusivamente para escribir en LaTeX.
+![](images/texworks.png){.absolute width="150" height="150" bottom="100" left="100"}
+
+- **Editores de Texto Avanzado**: Abarcan mas lenguajes que LaTeX.
+![](images/visual_studio.png){.absolute width="150" height="150" bottom="100" left="700"}
+
+- **Editores en Línea**: Basados en el navegador con funciones de colaboración en tiempo real.
+![](images/overleaf.png){.absolute width="150" height="150" bottom="100" left="1300"}
+:::
+
+## Elementos basicos de LaTeX
+
+![](images/piezas.png){width="30%" fig-align="center"}
+
+::: box3
+Para la siguiente parte del curso usaremos [Overleaf](https://www.overleaf.com/)
+:::
+
+
+## Estructura básica de LaTeX
+
+<div style="text-align: center;padding: 20px; font-size: 50px; margin-top: 100px">
+**Formato** $\rightarrow$ **Portada** $\rightarrow$ **Contenido**
+</div>
+
+## Formato
+
+
+::: box1
+Antes de empezar a editar la portada o el contenido del documento es importante definir los parámetros que condicionaran el formato y el orden que seguirá el texto.
+:::
+
+
+### Definición del Documento de LaTeX: *documentclass\{ }*
+
+```latex
+\documentclass{article}
+```
+
+### Paquetes: *usepackage\{ }*
+
+Algunas funciones requieren de paquetes (librerías) para que el software las reconozca.
+Para aprovechar estas funciones se debe especificar que paquetes deben ser reconocidos a la hora de compilar el documento
+
+
+```latex
+\usepackage{package}
+```
+## Paquetes principales
+
+::: box2
+::: {.small}
+- **graphicx**: Permite la inclusión y manipulación de gráficos, imágenes y figuras en el documento.
+- **amsmath**: Proporciona mejoras en la composición de fórmulas matemáticas y símbolos.
+- **babel**: Facilita la escritura de documentos en diferentes idiomas, adaptando la tipografía y reglas de formato correspondientes.
+- **inputenc**: Permite la especificación del juego de caracteres de entrada, por ejemplo UTF-8.
+- **fontenc**: Define cómo los caracteres se representan en el documento final y permite utilizar fuentes con codificación T1, entre otras.
+- **hyperref**: Permite la creación de enlaces internos y externos en el documento.
+- **geometry**: Facilita el ajuste de los márgenes y tamaños de página del documento.
+- **fancyhdr**: Permite personalizar los encabezados y pies de página.
+- **listings**: Permite resaltar y formatear código fuente de programación.
+- **float**: Mejora el posicionamiento de objetos flotantes como tablas y figuras.
+:::
+:::
+
+
+
+::: notes
+graphicx: Permite la inclusión y manipulación de gráficos, imágenes y figuras en el documento.
+
+amsmath: Proporciona mejoras en la composición de fórmulas matemáticas y símbolos.
+
+babel: Facilita la escritura de documentos en diferentes idiomas, adaptando la tipografía y reglas de formato correspondientes.
+
+inputenc: Permite la especificación del juego de caracteres de entrada, por ejemplo, UTF-8.
+
+fontenc: Define cómo los caracteres se representan en el documento final y permite utilizar fuentes con codificación T1, entre otras.
+
+hyperref: Permite la creación de enlaces internos y externos en el documento, así como la generación de hipervínculos y marcadores para la navegación en documentos electrónicos.
+
+geometry: Facilita el ajuste de los márgenes y tamaños de página del documento.
+
+fancyhdr: Permite personalizar los encabezados y pies de página.
+
+natbib o biblatex: Ayudan en la gestión de bibliografías y citas bibliográficas.
+
+listings: Permite resaltar y formatear código fuente de programación.
+
+float: Mejora el posicionamiento de objetos flotantes como tablas y figuras.
+:::
+
+## Templates
+
+::: box1
+[Overleaf](https://www.overleaf.com/) nos entrega un sin fin de *templates* para nuestros documentos. Disponibles [aquí](https://www.overleaf.com/latex/templates)
+:::
+
+
+![](images/templates.png){width="70%" fig-align="center"}
+
+## Ejemplo básico
+
+**Creación del Documento y definición de parámetros.**
+
+::: {.small}
+``` latex
+\documentclass{article}  %Definición del Documento
+
+\usepackage[spanish]{babel}  %Configuración de Idioma
+
+\usepackage[letterpaper,
+            top=2cm,
+            bottom=2cm,
+            left=3cm,
+            right=3cm,
+            marginparwidth=1.75cm]{geometry} %Parámetros 
+
+%Paquetes de ejemplo
+
+\usepackage[utf8]{inputenc}
+\usepackage{underscore}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{datetime}
+\usepackage{ragged2e}
+\usepackage{parskip}
+\newdateformat{monthyeardate}{%
+\monthname[\THEMONTH], \THEYEAR}
+
+\title{Latex}  %Titulo
+\author{Eloy Alvarado}      %Autor
+
+\begin{document}  %Inicio del Contenido
+```
+:::
+
+## Portada
+
+:::: {.columns}
+
+::: {.column}
+<div style="padding: 5px;">
+</div>
+
+::: {.small}
+``` latex
+\begin{titlepage} %Inicio portada
+
+%Imagen
+\begin{figure}[h]
+\vspace{10mm}  %Espacio Vertical
+\centering
+\includegraphics[scale=0.15]{logo_usm.png} %Logo USM
+\end{figure}
+
+\vspace{50mm}
+\begin{center} 
+\hrule         %Linea Horizontal
+\vspace{2mm}
+{\Huge \textbf{\sc Presentación}}\\ %Titulo
+\vspace{2mm}
+{\Large \sc{Latex}}
+\vspace{2mm}
+\hrule
+\vspace{1cm}
+
+
+\centering
+\textbf{Autor:     Eloy Alvarado} \\ %Autor
+
+\vfill
+\textsc{\monthyeardate\today}\\[0.5cm] %Fecha
+\end{center}
+
+
+\end{titlepage}
+```
+:::
+
+:::
+
+::: {.column} 
+
+::: box4
+<img src="images/portada.png" alt="Portada" style="border: 2px solid black; width: 400px; margin-left: 100px">
+:::
+:::
+
+
+::::
+
+
+## Contenido
+
+
+:::: {.columns}
+::: {.column}
+<div style="padding: 5px;">
+</div>
+
+::: {.small}
+
+``` latex
+\section{Contenido}
+
+\justifying
+En este documento de LaTeX, se presenta de manera 
+detallada y exhaustiva el contenido que se puede 
+incluir en el mismo. A través del lenguaje de 
+marcado LaTeX, es posible crear y formatear textos
+de forma justificada, permitiendo así una 
+presentación clara y profesional. Además, LaTeX 
+ofrece la flexibilidad para incorporar fórmulas
+matemáticas dentro del propio texto, lo que resulta 
+especialmente útil para expresar
+conceptos matemáticos de manera precisa y elegante.
+
+\subsection{Formato de Texto}
+LaTeX entrega la libertad de modificar el texto 
+según las necesidades de quien edita, permitiendo: 
+
+\begin{itemize}
+    \item Textos centrados:
+    
+            LaTeX \centering
+
+    \item Textos a la derecha: \justifying
+
+            LaTeX \raggedleft
+
+    \item Textos en Negrita: \textbf{LaTeX} 
+    \justifying
+
+    \item Textos en Cursiva: \textit{LaTeX}  
+
+    \item Textos en otra tipografía: \texttt{LaTeX}
+\end{itemize}
+
+Entre muchas opciones más.
+
+\justifying
+\subsection{Matemática}
+
+Respecto a la matemática, la principal 
+de este software, existen múltiples de 
+materializarla.
+
+\vspace{10mm}
+
+\textbf{Modo de ecuación numerada}: para que 
+el documento asocie la ecuación a un numero de 
+forma automática permitiendo hacer referencia
+a ella en el texto.
+
+\centering
+\begin{math}
+\sqrt{x^2+1}
+\end{math}
+
+\justifying
+
+\vspace{10mm}
+
+\textbf{Modo de ecuación sin enumerado}: Para que 
+quede centrada y quede en una linea separada, 
+dandole mas enfasís.
+
+\[\sqrt{x^2+1}\] 
+
+$$\sqrt{x^2+1}$$
+
+\textbf{Modo en línea}: para incluir formulas
+dentro del texto $\sqrt{x^2+1}$
+
+\end{document}
+```
+:::
+
+:::
+
+
+::: {.column}
+<img src="images/contenido.png" alt="Portada" style="border: 2px solid black; width: 400px; margin-left: 100px">
+:::
+::::
+
+## Texto
+
+El texto en Latex se escribe directamente, si es que no se le desea asignar algún formato.
+
+::: {.small}
+```latex
+El término neolatino 'Plantae' y el castellano 'plantas' 
+derivan del latín planta (brote, retoño), plantare 
+(quedarse allí donde las plantas de los pies tocan el suelo).
+Desde este punto de vista, podríamos llamar planta a cualquier
+ser plantado en el suelo o en un sustrato; sin embargo, 
+podemos ver excepciones en algunos briófitos y en la angiosperma
+lenteja de agua, que no están fijos, pero los consideramos plantas.
+```
+:::
+
+<br>
+
+
+:::{style="border: 2px solid black"}
+![](images/texto_planta_uno.png){width="70%" fig-align="center"}
+:::
+
+
+
+## Texto
+
+Para destacar y darle un formato especifico al texto anterior existen múltiples comandos, siendo los principales 
+
+::: {.small}
+``` text
+\textbf{Texto en Negrita}
+\textit{Texto en Cursiva}
+```
+:::
+
+Ajustando el texto anterior
+
+::: {.small}
+```latex
+El término neolatino \textit{'Plantae'} y el castellano \textit{'plantas'} 
+derivan del latín \textbf{planta} (brote, retoño), \textbf{plantare} 
+(quedarse allí donde las plantas de los pies tocan el suelo).
+Desde este punto de vista, podríamos llamar planta a cualquier
+ser plantado en el suelo o en un sustrato; sin embargo, 
+podemos ver excepciones en algunos \textbf{briófitos} y en la \textbf{angiosperma}
+lenteja de agua, que no están fijos, pero los consideramos plantas.
+```
+:::
+
+<br>
+
+![](images/texto_con_formato.png){width="70%" fig-align="center"}
+
+## Parrafos
+
+Para separar párrafos en LaTeX, basta con colocar una linea en blanco entre párrafos.
+
+::: {.small}
+```latex
+...sin embargo, podemos ver excepciones en algunos \textbf{briófitos} y 
+en la \textbf{angiosperma} lenteja de agua, que no están fijos, pero 
+los consideramos plantas.
+
+Por otro lado, el concepto moderno de planta, viene del sistema de 
+clasificación de Haeckel, quien descarta el antiguo reino vegetal,
+creando un nuevo reino Plantae con un sentido más natural y con sus
+características comunes, por lo que este nuevo reino no admite como
+miembros a otros organismos que no están relacionados con las plantas
+terrestres, como sucede con las bacterias, los hongos y las protistas en general.
+```
+:::
+
+<div style="padding: 2px;">
+</div>
+
+::: box1
+Es necesario tener el paquete **parskip** para que lo anterior funcione
+:::
+
+## Jerarquía de Texto
+
+LaTeX basa su jerarquía en **Secciones** y **Subsecciones**, las cuales son ordenadas automáticamente según el orden lógico que siguen.
+
+``` latex
+\section{Planeta}
+Tierra
+
+\subsection{Pais}
+Chile
+
+\subsubsection{Ciudad}
+Santiago de Chile
+```
+<p align="center">
+  <img src="images/ejemplo_jerarquia_texto.png" alt="Portada" style="border: 2px solid black; width: 600px;">
+</p>
+
+
+## Listados {.small}
+Para hacer un listado en LaTeX se tiene que empezar una **"Itemización"** o **"Enumeración"**.
+<div style="padding: 20px;">
+</div>
+Los elementos de estos listados se denominan **items**:
+
+
+::::{.columns}
+::: {.column}
+```latex
+\subsubsection{Números}
+
+\begin{enumerate}
+  \item Uno
+  \item Dos
+  \item Tres
+\end{enumerate}
+```
+<p align="center">
+  <img src="images/ejemplo_numeros.png" alt="Portada" style="border: 2px solid black; width: 300px;">
+</p>
+:::
+
+::: {.column}
+```latex
+\subsubsection{Animales}
+
+\begin{itemize}
+  \item León
+  \item Perro
+  \item Gato
+\end{itemize}
+```
+<p align="center">
+  <img src="images/ejemplo_animales.png" alt="Portada" style="border: 2px solid black; width: 300px;">
+</p>
+:::
+::::
+
+## Referencias y Bibliografia
+
+::: {.small}
+::: box1
+Para Insertar citas y referencias es necesario adjuntar al documento de LaTeX un archivo *bib* (Base de datos en BibTex) que contendrá la información bibliográfica de las fuentes citadas en el documento.
+:::
+
+Las entradas en este documento tienen la siguiente sintaxis:
+
+```latex
+@article{Smith2021,  %Identificador de Referencia
+  author = {John Smith and María López},
+  title = {Environmental Challenges in Chile: A Case Study of the Atacama Desert},
+  journal = {Environmental Science Journal},
+  volume = {25},
+  number = {3},
+  pages = {201--215},
+  year = {2021},
+  doi = {10.12345/esj.2021.25.3.201},
+  publisher = {Springer}
+}
+```
+
+Si se desease utilizar la referencia anterior en una cita se debe adjuntar el comando 
+
+```latex
+\cite{Smith2021}
+```
+:::
+
+## Gestión Bibliográfica
+
+:::box1 
+Si bien en $\LaTeX$ requiere un archivo `.bib` que guarde las referencias que utilizaremos, existen gestores de referencias bibliográficas que nos permiten construir fácilmente este archivo.
+:::
+
+::: {.r-stack}
+![](images/jabref_logo-300x138.png){.fragment}
+
+![](images/1200px-Zotero_logo.svg.png){.fragment width="20%"}
+
+![](images/mdly-portrait.png){.fragment .absolute width="15%" top="310" right="100"}
+:::
+
+- [JabRef](https://www.jabref.org/)
+- [Zotero](https://www.zotero.org/)
+- [Mendeley](https://www.mendeley.com/)
+
+## Bibliografía
+
+Para incorporar la bibliografía al texto incluímos:
+
+```latex
+\bibliographystyle{plain}
+\bibliography{refs}
+```
+
+# ¿Por qué Latex?
+
+- En términos Visuales, la calidad tipográfica genera documentos con un aspecto profesional y agradable a la vista. 
+
+- Por su construcción lógica, LaTeX separa el contenido del documento de su formato, lo que garantiza una consistencia y uniformidad en la apariencia del documento.
+
+- Ofrece alta Portabilidad debido a que los documentos LaTeX son compatibles con múltiples plataformas, facilitando la colaboración y el intercambio de documentos.
+
+- Es muy cómodo para la construcción y composición de expresiones matemáticas complejas.
+
+::: notes
+Tipografía de alta calidad: LaTeX produce documentos con una calidad tipográfica superior, ya que utiliza algoritmos avanzados para el espaciado, justificación y disposición de texto. Esto da como resultado un aspecto más profesional y agradable a la vista.
+
+Gestión avanzada de referencias y bibliografías: LaTeX facilita la gestión de citas y bibliografías a través de herramientas como BibTeX y biblatex. Esto permite una gestión más fácil y precisa de las referencias y citaciones bibliográficas.
+
+Fórmulas matemáticas: LaTeX es excepcional para componer ecuaciones y expresiones matemáticas complejas. Su sintaxis sencilla permite una escritura más rápida y precisa de fórmulas, y los resultados son de alta calidad tipográfica.
+
+Estilo y formato uniforme: LaTeX separa el contenido del documento de su formato, lo que garantiza una consistencia y uniformidad en la apariencia del documento. Esto es especialmente útil en documentos largos y complejos.
+
+Compatibilidad con control de versiones: Los documentos LaTeX son archivos de texto plano, lo que facilita el uso de sistemas de control de versiones como Git. Esto es muy útil para colaborar en proyectos y rastrear cambios en el documento con precisión.
+
+Automatización y eficiencia: LaTeX es un sistema de composición, lo que significa que los usuarios pueden concentrarse en el contenido y la estructura del documento, mientras LaTeX se ocupa del diseño y la disposición. Esto permite una mayor eficiencia en la creación de documentos complejos.
+
+Portabilidad: Los documentos LaTeX son compatibles con prácticamente cualquier plataforma o sistema operativo, lo que facilita la colaboración y el intercambio de documentos.
+
+Gratuito y de código abierto: LaTeX es software gratuito y de código abierto, lo que significa que cualquier persona puede utilizarlo, modificarlo y distribuirlo libremente.
+:::
+
+## Escritura técnica
+
+:::: {.columns}
+::: {.column}
+\begin{equation}
+z=\overbrace{\underbrace{x}_\text{real}+i\underbrace{y}_\text{imaginario}}^\text{numero complejo}
+\end{equation}
+:::
+
+::: {.column}
+<div style="padding: 20px;">
+</div>
+```latex
+\begin{equation}
+z=\overbrace{\underbrace{x}_\text{real}+
+i\underbrace{y}_\text{imaginario}}
+^\text{numero complejo}
+\end{equation}
+```
+:::
+
+::::
+
+:::: {.columns}
+::: {.column}
+\begin{equation}
+A \xleftarrow{\text{Izquierda}} B 
+  \xrightarrow[\text{Derecha}]{ } C
+\end{equation}
+:::
+
+::: {.column}
+<div style="padding: 20px;">
+</div>
+
+```latex
+\begin{equation}
+A \xleftarrow{\text{Izquierda}} B 
+  \xrightarrow[\text{Derecha}]{ } C
+\end{equation}
+``` 
+:::
+::::
+
+:::: {.columns}
+<div style="padding: 20px;">
+</div>
+:::{.column}
+\begin{equation}
+  x = a_0 + \frac{1}{a_1 +
+  \frac{1}{a_2 +
+  \frac{1}{a_3 +
+  a_4}}}
+\end{equation}
+:::
+
+:::{.column}
+<div style="padding: 20px;">
+</div>
+```tex
+\begin{equation}
+  x = a_0 + \frac{1}{a_1 +
+  \frac{1}{a_2 +
+  \frac{1}{a_3 + a_4}}}
+\end{equation}
+```
+:::
+::::
+
+::: {.notes}
+
+Esta parte será muy importante porque Quarto utiliza mucho la sintáxis para escritura técnica de LaTeX
+
+:::
+
+
+## Overleaf + GitHub
+
+Overleaf tiene integraciones con distintas herramientas:
+
+- Dropbox
+- GitHub
+- Mendeley
+- Zotero
+
+. . .
+
+entre otros. Sin embargo, muchas de estas integratciones requieren **una cuenta premium**.
+
+## Ejercicio práctico
+
+::: box1
+Escoger un informe y replicar su contenido en $\LaTeX$ (incluida la bibliografía), guardando el proyecto en un repositorio GitHub.
+
+Para esto se puede usar un template o desde cero.
+
+:::
+
+
+# R & RStudio
+
+![](images/r-rstudio-logos.png){width=50% fig-align="center"}
+
+## La discusión eterna
+
+![](images/r_vs_py.png){width=60% fig-align="center"}
+
+. . .
+
+> Ambos lenguajes nos permiten realizar investigaciones reproducibles. 
+
+## R + Python
+
+> `R` y `Python` no son mutuamente excluyentes
+
+![](images/reticulated_python.png){width=60% fig-align="center"}
+
+## Código python en R
+
+::: {.small}
+El paquete [reticulate](https://rstudio.github.io/reticulate/) nos permite ejecutar código `Python` en nuestros archivos R.
+
+1. Instalamos y cargamos el paquete
+
+:::{.fragment}
+```{r}
+#| echo: true
+#| eval: false
+install.packages("reticulate")
+```
+:::
+
+2. Configuramos la dirección de nuestro python local
+
+:::{.fragment}
+```{r}
+#| echo: true
+#| eval: false
+library(reticulate)
+use_python("/home/ealvnrz/anaconda3/bin/python")
+```
+:::
+
+3. Ejecutamos código python
+
+:::{.fragment}
+```{r}
+#| echo: true
+#| eval: false
+py_run_string("def Psq (x):
+                value= x*x
+                return(value)")
+```
+:::
+
+4. Utilizamos la función en R
+
+:::{.fragment}
+```{r}
+#| echo: true
+#| eval: false
+py$Psq(3)
+```
+:::
+
+::: box1
+También es posible ejecutar código R en Python utilizando la librería [rpy2](https://rpy2.github.io/)
+:::
+
+:::
+
+
+## Programando en R
+
+::: box3
+En lo que resta del curso, asumiremos que se tiene un nivel básico de R; esto es, conocer los operadores básicos de R: funciones, operaciones matemáticas y objectos (vectores, escalares, etc.)
+:::
+
+Para una introducción a R, ver [Introducción a R](https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf) del **R Development Core Team**
+
+![](images/workflow_meme.png){width=40% fig-align="center"}
+
+
+## Tipos de Datos
+
+::: {.small}
+> Cada objeto en R es de un tipo base y sólo **R-core** puede crear nuevos tipos
+
+### Tipos de datos base
+
+> Existen 5 tipos de datos base: `double`, `integer`, `complex`, `logical` y `character`. Estos también pueden ser tipo `NULL`.
+
+Sin importar la complejidad del análisis, **en R todos los datos son interpretados como alguno de estos tipos base**
+:::
+
+## Tipos de datos base
+
+```{r}
+#| echo: true
+typeof(3.14)
+typeof(1L)
+typeof(3i)
+typeof(TRUE)
+typeof('USM')
+typeof(NULL)
+```
+
+
+## Estructuras de Datos
+
+::: {.small}
+### Matrices (arreglos)
+
+> Una característica distintiva de las matrices es que todos los valores son del mismo tipo de dato
+
+### Vectores y coerción de tipos 
+
+> Los vectores son matrices 1-dimensionales.
+:::
+
+
+## Estructuras de Datos
+
+:::{.fragment}
+```{r}
+#| echo: true
+vector <- vector(length = 3)
+vector
+typeof(vector)
+vector_char <- vector(mode = "character", length = 3)
+vector_char
+typeof(vector_char)
+```
+:::
+
+
+:::{.notes}
+Esto permite un cálculo eficiente y matemáticas matriciales. La rigurosidad también tiene unas consecuencias realmente importantes que introducen otro concepto clave en R, el de coerción.
+
+Si no se escoge un tipo de dato, por defecto será tipo lógical.
+:::
+
+## Coerción
+
+¿Qué producirá el siguiente código?:
+
+```{r}
+#| echo: true
+ex <- c(2,6,"3")
+```
+
+. . .
+
+**Respuesta:**
+
+```{r}
+ex
+```
+
+> En lo anterior, se realizó una coerción de tipo. No tener claridad de cómo funciona esto, es lo que usualmente dificulta programar correctamente un código en R.
+
+
+## Coerción
+
+**La coerción ocurre cuando ingresamos datos de distinto tipo en un objeto que sólo permite que sus valores sean de un sólo tipo**
+
+:::box3
+**Reglas de coerción:**
+
+`logical -> integer -> numeric -> complex -> character`
+:::
+
+*Leemos `->` como "puede ser transformado en"*
+
+
+
+## Ejemplos de coerción {.small}
+
+### logical -> character
+
+:::{.fragment}
+```{r}
+#| echo: true
+c("a", TRUE)
+```
+:::
+
+:::{.fragment}
+```{r}
+#| echo: true
+c("FALSE", TRUE)
+```
+:::
+
+:::{.fragment}
+### logical -> numeric
+
+```{r}
+#| echo: true
+c(0, TRUE)
+```
+:::
+
+:::{.fragment}
+
+**Es posible forzar una coerción utilizando `as.`**
+
+```{r}
+#| echo: true
+chars <- c("0","3","4")
+as.numeric(chars)
+as.logical(chars)
+as.logical(as.numeric(chars))
+as.numeric(c("FALSE", TRUE))
+```
+:::
+
+
+
+## Listas
+
+> Las listas puede guardar objetos de cualquier tipo o clase
+
+. . .
+
+```{r}
+#| echo: true
+list(1, "a", TRUE)
+```
+
+## Objectos S3, S4 Y S6
+
+> Las matrices y listas tienen un tipo base inmutable. En contraste, en R existen los objetos S3, S4 y S6; siendo S3 el más común.
+
+. . .
+
+**Estos objetos tienen un atributo de clase, que permite que existan funcionalidad especificas para aquella clase. Esto es una característica principal de la programación orientada a objetos**
+
+. . .
+
+### Data.frames
+
+> El objeto S3 más importante en R es el data.frame, que son un tipo especial de lista
+
+```{r}
+#| echo: true
+df <- data.frame(id = 1:3, 
+                 tratamiento = c("a", "b", "b"), 
+                 estado = c(TRUE, TRUE, FALSE))
+df
+```
+
+## Data.frames
+
+```{r}
+#| echo: true
+typeof(df)
+class(df)
+sloop::otype(df)
+```
+
+##  {background-image="images/tidyverse-default.png" .small}
+
+::: box1
+Tidyverse es un sistema coherente de paquetes para manipulación, exploración y visualización de datos que comparten una filosofía de diseño común.
+:::
+
+. . .
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+::: box1
+**Ventajas:**
+
+- Funciones consistentes
+- Cobertura de flujo de trabajo
+- Enfoque parsimonioso para el desarrollo de herramientas
+:::
+
+## Flujo de trabajo
+
+![](images/program.png){width=60% fig-align="center"}
+
+### Principios
+
+- `tibbles` como estructura principal de datos
+- *Tidy data*, donde las filas son observaciones particulares y las columnas las variables observadas
+- Canalizar las salidas de las funciones como entradas de otras.
+
+
+:::{.fragment}
+[Artículo original sobre Tidy Data en Journal of Statistical Software](https://www.jstatsoft.org/article/view/v059i10) [@tidy]
+:::
+
+
+## Núcleo de Tidyverse
+
+::: {.r-stack}
+
+![](images/ggplot2.png){.fragment width=70% fig-align="center"}
+
+![](images/dplyr.png){.fragment width=70% fig-align="center"}
+
+![](images/tidyr.png){.fragment width=70% fig-align="center"}
+
+![](images/readr.png){.fragment width=70% fig-align="center"}
+
+![](images/purrr.png){.fragment width=70% fig-align="center"}
+
+![](images/tibble.png){.fragment width=70% fig-align="center"}
+
+![](images/stringr.png){.fragment width=70% fig-align="center"}
+
+![](images/forcats.png){.fragment width=70% fig-align="center"}
+:::
+
+:::{.notes}
+ggplot2
+ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. 
+
+dplyr
+dplyr provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges. 
+
+tidyr
+tidyr provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable..
+
+readr
+readr provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is designed to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes.  
+
+purrr
+purrr enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive. 
+
+
+tibble
+tibble is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly: they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code. Go to docs...
+
+
+stringr
+stringr provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations. 
+
+forcats
+forcats provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values.
+:::
+
+## Tibble 
+
+::::{.columns}
+
+:::{.column}
+![](images/tibble.png){width=40% fig-align="center"} 
+:::
+
+:::{.column}
+> `tibbles` es una de las características unificadoras de tidyverse; es la versión tidyverse de los objetos data.frame
+:::
+::::
+Sus características principales son:
+
+- Mejor comportamiento en su impresión
+- No permite la coerción de caracteres a factores
+- Manejo los errores de manera más robusta
+
+## Data.frame a tibble 
+
+::::{.columns}
+
+:::{.column}
+Para transformar un objeto data.frame a tibble escribimos:
+
+```{r}
+#| echo: true
+trees_tbl <- tibble::as_tibble(datasets::trees)
+trees_tbl
+```
+:::
+
+:::{.column}
+Para crear conjuntos de datos tibble escribimos:
+
+```{r}
+#| echo: true
+tibble::tibble(
+    x = 1:5, 
+    y = 1, 
+    z = x ^ 2 + y
+)
+```
+:::
+::::
+
+## readr
+
+::::{.columns}
+
+:::{.column}
+![](images/readr.png){width=40% fig-align="center"}
+:::
+
+:::{.column}
+::: {.small}
+> El paquete **readr** contiene funciones simples y consistentes para importar datos guardados como documentos de archivo sin formato. Ofrece una alternativa a las funciones básicas de R.
+:::
+:::
+::::
+
+::: {.small}
+Entre sus principales ventajas están:
+
+- Es ~10 veces más rápido que las funciones de lectura de datos de R base.
+- Entre datos en formato tibble
+- Tiene configuraciones más intuitivas por defecto: No nombres por fila y no `stringsAsFactors = TRUE`
+:::
+
+## Funciones de lectura
+
+Funciones        | Lee
+-------------- | --------------------------
+`read_csv()`   | Comma separated values
+`read_csv2()`  | Semi-colon separate values
+`read_delim()` | General delimited files
+`read_fwf()`   | Fixed width files
+`read_log()`   | Apache log files
+`read_table()` | Space separated files
+`read_tsv()`   | Tab delimited values
+
+## Funciones de escritura
+
+Funciones            | Escribe
+------------------- | ----------------------------------------
+`write_csv()`       | Comma separated values
+`write_excel_csv()` | CSV que se planea abrir en Excel
+`write_delim()`     | General delimited files
+`write_file()`      | Un string, escrito tal como está
+`write_lines()`     | Un vector de strings, un string por línea
+`write_tsv()`       | Tab delimited values
+
+## Otro tipos de datos
+
+Existen otros paquetes que nos permiten leer archivos en distintos formatos, entre ellos:
+
+
+Paquete  | Lee
+-------- | -----
+haven    | Archivos de SPSS, Stata y SAS
+readxl   | Archivos excel  (.xls, .xlsx)
+jsonlite | json
+xml2     | xml
+httr     | web API's
+rvest    | Páginas web (web scraping)
+DBI      | databases
+sparklyr | datos cargados en spark 
+
+
+## dplyr
+
+::::{.columns}
+
+:::{.column}
+![](images/dplyr.png){width=40% fig-align="center"}
+:::
+
+:::{.column}
+> El paquete **dplyr** es una gramática para la manipulación de datos. Sus funciones se definen como verbos.
+:::
+::::
+
+Entre las funciones más utilizadas en este paquete se encuentras:
+
+- `%>%`
+- `group_by` & `filter`
+- `mutate`
+- `select`
+
+## tidyr
+
+::::{.columns}
+
+:::{.column}
+![](images/tidyr.png){width=40% fig-align="center"}
+:::
+
+:::{.column}
+> El paquete **tidyr** tiene por finalidad transformar los datos en formato **tidy**. 
+:::
+::::
+
+![](images/wide_long.png){width=50% fig-align="center"}
+
+
+## ggplot2
+
+::::{.columns}
+
+:::{.column}
+![](images/ggplot2.png){width=40% fig-align="center"}
+:::
+
+:::{.column}
+::: {.small}
+> El paquete **ggplot2** es un sistema para crear gráficos de manera declarativa. Se provee los datos, se configura como relacionar las variables a lo elementos estéticos, que estilo de gráfico se desea y el paquete hace el resto.
+:::
+:::
+::::
+
+::: {.small}
+En general, la estructura de un gráfico de ggplot es:
+
+```{r}
+#| echo: true
+#| eval: false
+ggplot(data.frame, aes(nombres_de_columna)) + geom_algo(argumentos, 
+    aes(columnas))
+```
+
+:::box3
+Los gráficos creados con ggplot2 se ha vuelto el estándar para las investigaciones reproducibles. Existen [múltiples extensiones](https://exts.ggplot2.tidyverse.org/gallery/) que complementan a ggplot2. También hay un [repositorio](https://github.com/erikgahner/awesome-ggplot2) que los pone a disposición.
+:::
+:::
+
+## ggplot2
+
+![](images/ggplot2_2.png){width=50% fig-align="center"}
+
+## Diagrama general
+
+![](images/tidyverse2.png){width=80% fig-align="center"}
+
+
+## {background-image="images/featured.jpg"}
+
+::: box3
+[`tidymodels`](https://www.tidymodels.org/) es un sistema coherente de paquetes para creación de modelos y uso de machine learning bajo los principios de `tidyverse`. 
+:::
+
+## Diagrama general
+
+![](images/program_badges.png){width=80% fig-align="center"}
+
+## Tidymodels
+
+![](images/tidymodels2.png){width=70% fig-align="center"}
+
+- `rsample` nos entrega herramientas para **realizar diferentes tipos de muestreo**
+- `recipes` nos entrega herramientas para **organizar el preprocesamiento y el *feature engineering* **
+- `parsnip` nos entrega herramientas para **definir modelos**
+- `yardstick` nos entrega herramientas para **calcular métricas de desempeño de los modelos**
+- `workflows` nos entrega herramientas para **combinar las etapas de preprocesamiento y creación de modelos**
+
+## parsnip
+
+![](images/cover.png){width=70% fig-align="center"}
+
+Podemos utilizar `parsnip_addin()` para ver los modelos compatibles con el paquete.
+
+## recipes
+
+![](images/recipes.png){width=70% fig-align="center"}
+
+# Módulo 5: Casos prácticos {background-color="#40666e"}
+
+## Ejemplo práctico
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1|2|3"
+library(tidyverse)
+library(palmerpenguins)
+penguins
+```
+
+![](images/penguins.png){.absolute bottom=0 right=50 width=40%}
+
+## Explorando los datos
+
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1|2|3|4|5"
+#| fig-align: center
+penguins %>%
+  filter(!is.na(sex)) %>%
+  ggplot(aes(flipper_length_mm, bill_length_mm, color = sex, size = body_mass_g)) +
+  geom_point(alpha = 0.5) +
+  facet_wrap(~species)
+```
+:::{.fragment}
+![](images/ggplot2.png){.absolute top=300 right=-50 width=20%}
+:::
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1|2|3"
+penguins_df <- penguins %>%
+  filter(!is.na(sex)) %>%
+  select(-island)
+```
+
+:::{.fragment}
+![](images/dplyr.png){.absolute top=300 right=-50 width=20%}
+:::
+
+## Construyendo un modelo {style="font-size:35px"}
+
+### Separación conjunto de entrenamiento y prueba
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1|2|3-5|6"
+library(tidymodels)
+set.seed(123)
+penguin_split <- initial_split(penguins_df, strata = sex)
+penguin_train <- training(penguin_split)
+penguin_test <- testing(penguin_split)
+penguin_split
+```
+
+
+
+### Remuestreo de los datos
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1|2|3"
+set.seed(123)
+penguin_boot <- bootstraps(penguin_train)
+penguin_boot
+```
+
+:::{.fragment}
+![](images/rsample.png){.absolute top=10 right=-50 width=20%}
+:::
+
+## Definiendo modelos
+
+:::box3
+Para este ejemplo realizaremos un modelo de regresión logística y un *random forest* para predecir el sexo de los pingüinos.
+:::
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1-2|3"
+glm_spec <- logistic_reg() %>%
+  set_engine("glm")
+glm_spec
+```
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1-2|3|4"
+rf_spec <- rand_forest() %>%
+  set_mode("classification") %>%
+  set_engine("ranger")
+rf_spec
+```
+
+:::{.fragment}
+![](images/parsnip.png){.absolute top=300 right=-50 width=20%}
+:::
+
+## Flujo de trabajo {style="font-size:35px"}
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1-2|3"
+penguin_wf <- workflow() %>%
+  add_formula(sex ~ .)
+penguin_wf
+```
+
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1|2|3-6|7"
+#| warning: false
+glm_rs <- penguin_wf %>%
+  add_model(glm_spec) %>%
+  fit_resamples(
+    resamples = penguin_boot,
+    control = control_resamples(save_pred = TRUE)
+  )
+glm_rs
+```
+
+:::{.fragment}
+![](images/workflows.png){.absolute top=300 right=-50 width=20%}
+:::
+
+## Flujo de trabajo
+
+```{r}
+#| echo: true
+#| code-line-numbers: "1|2|3-6|7"
+#| warning: false
+rf_rs <- penguin_wf %>%
+  add_model(rf_spec) %>%
+  fit_resamples(
+    resamples = penguin_boot,
+    control = control_resamples(save_pred = TRUE)
+  )
+rf_rs
+```
+
+## Evaluando los modelos
+
+
+```{r}
+#| echo: true
+collect_metrics(rf_rs)
+collect_metrics(glm_rs)
+```
+
+::: box3
+El modelo lineal tiene mejor desempeño que un *random forest*, por lo que lo analizamos en detalle.
+:::
+
+## Revisando el modelo lineal
+
+```{r}
+#| echo: true
+glm_rs %>%
+  conf_mat_resampled()
+```
+
+```{r}
+#| fig-align: center
+glm_rs %>%
+  collect_predictions() %>%
+  group_by(id) %>%
+  roc_curve(sex, .pred_female) %>%
+  ggplot(aes(1 - specificity, sensitivity, color = id)) +
+  geom_abline(lty = 2, color = "gray80", size = 1.5) +
+  geom_path(show.legend = FALSE, alpha = 0.6, size = 1.2) +
+  coord_equal()
+```
+
+## Probando el modelo {.small}
+
+::: box3
+Utilizamos el conjunto de prueba en nuestro modelo lineal
+:::
+
+:::{.fragment}
+```{r}
+#| echo: true
+#| code-line-numbers: "1-2|3|4"
+penguin_final <- penguin_wf %>%
+  add_model(glm_spec) %>%
+  last_fit(penguin_split)
+penguin_final
+```
+:::
+
+
+:::{.fragment}
+```{r}
+#| echo: true
+collect_metrics(penguin_final)
+
+```
+:::
+
+:::{.fragment}
+```{r}
+#| echo: true
+#| code-line-numbers: "1-2|3|4"
+collect_predictions(penguin_final) %>%
+  conf_mat(sex, .pred_class)
+```
+:::
+
+
+## Detalle del modelo {style="font-size:35px"}
+
+```{r}
+#| echo: true
+penguin_final$.workflow[[1]] %>%
+  tidy(exponentiate = TRUE)
+```
+
+```{r}
+#| fig-align: center
+penguins %>%
+  filter(!is.na(sex)) %>%
+  ggplot(aes(bill_depth_mm, bill_length_mm, color = sex, size = body_mass_g)) +
+  geom_point(alpha = 0.5) +
+  facet_wrap(~species)
+```
+
+## Cheatsheets
+
+- [`readr`](https://rstudio.github.io/cheatsheets/data-import.pdf)
+- [`ggplot2`](https://rstudio.github.io/cheatsheets/data-visualization.pdf)
+- [`dplyr`](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
+- [`tidyr`](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
+- [`purrr`](https://rstudio.github.io/cheatsheets/purrr.pdf)
+- [`stringr`](https://rstudio.github.io/cheatsheets/strings.pdf)
+- [`forcats`](https://rstudio.github.io/cheatsheets/factors.pdf)
+- [`lubridate`](https://rstudio.github.io/cheatsheets/lubridate.pdf)
+- [`RStudio IDE`](https://rstudio.github.io/cheatsheets/rstudio-ide.pdf)
+- [`reticulate`](https://rstudio.github.io/cheatsheets/reticulate.pdf)
+
+## Flujo de trabajo
+
+![](images/program_badges.png){width=60% fig-align="center"}
+
+## {background-image="images/himalaya.jpeg"}
+
+::: box1
+::: {.small}
+Utilizaremos un conjunto de datos de del proyecto [`tidytuesday`](https://github.com/rfordatascience/tidytuesday) como nuestro objeto de estudio; [Himalayan Climbing Expeditions](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-22/readme.md).
+:::
+:::
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+::: box1
+::: {.small}
+El conjunto de datos contiene un gran registro (entre 1905-2019) de varios *peaks* de la cordillera del Himalaya. las expediciones realizadas e integrantes de cada expedición.
+
+**Objetivo: Predecir la probabilidad de que una expedición tenga un final letal.**
+:::
+:::
+
+## Proceso usual de creación de modelos
+
+
+![](images/modeling-process.svg){width=80% fig-align="center"}
+
+
+
+# Módulo 6: Difusión de resultados {background-color="#40666e"}
+
+## Rmarkdown & Quarto
+
+![](images/rmarkdown_quarto.png){width="50%" fig-align="center"}
+
+::: box3
+El paquete `rmarkdown` provee un marco de escritura para investigaciones cuentitativas, que combina códigos, resultados y texto. Los documento R Markdown son **completamente reproducibles** y permiten generar archivos en distintos formatos: PDF, Word, Presentaciones y más. `Quarto` es la nueva generación de esta herramienta para incluir distintos lenguajes.
+:::
+
+## Algunos ejemplos
+
+-   [Galería de ejemplos](https://quarto.org/docs/gallery/)
+
+## Quarto
+
+![](images/quarto2.png){width="70%" fig-align="center"}
+
+Los archivos `Quarto` fueron diseñados para ser usados de tres maneras:
+
+1.  Para comunicar a los tomadores de decisiones, quienes quieren centrarse en las conclusiones, no en el código detrás del análisis.
+
+2.  Para colaborar con otros investigadores, quienes están interesados en las conclusiones y el cómo se llego a ellas (i.e. el código)
+
+3.  Como un ambiente para hacer análisis, como un *notebook* donde se puede capturar el trabajo realizado junto a notas de este.
+
+## Primeros pasos
+
+1.  Entrar a [Quarto.org](https://quarto.org/docs/get-started/)
+2.  Descargar `Quarto` para su sistema operativo
+3.  Ingresar a `RStudio` y crear documento `.qmd`
+
+## Flujo documento Quarto
+
+![](images/rstudio-qmd-how-it-works.png){width="50%" fig-align="center"}
+
+-   `qmd`: archivo de origen
+-   `knitr`: Herramienta que interpreta y ejecuta códigos y lo traduce en texto **markdown**
+-   `md`: texto escrito en lenguaje **markdown**
+-   `pandoc`: Herramienta que convierte archivos `.md` enb distintos formatos
+
+## Anatomía de un documento Quarto
+
+1.  Encabezado en formato `YAML`
+2.  Texto en formato `Quarto`
+3.  Bloques de código (`R`, `Python`, `Julia`, `Observable`)
+
+
+## YAML
+
+> YAML es un formato de *serialización* de datos que puede ser leído fácilmente. Su uso es amplio, desde Acciones en GitHub hasta Quarto
+
+Un ejemplo de YAML que difine un **ambiente computacional** podría ser:
+
+```
+# Define the operating system as Linux
+os: linux
+
+# Use the xenial distribution of Linux
+dist: xenial
+
+# Use the programming language Python
+language: python
+
+# Use version of Python 3.2
+python: 3.2
+
+```
+
+::: box3
+YAML nos será de particular interés para la creación de documentos y presentaciones reproducibles, utilizando quarto.
+:::
+
+
+## Herramientas
+
+El contenido del documento puede estar escrito utilizando diferentes formatos, entre ellos:
+
+-   `Quarto`
+-   `HTML`
+-   `LaTeX`
+-   `CSS`
+
+## Creación de documento básico
+
+1.  Abrir `RStudio`
+2.  File \> New File \> Quarto Document
+3.  Definir características del documento
+
+
+# Markdown
+
+![](images/Markdown_logo.png){width="10%" fig-align="center"}
+
+
+## Formato de Texto
+
++-----------------------------------------+-----------------------------------------+
+| Sintáxis Markdown                       | Salida                                  |
++=========================================+=========================================+
+| ``` markdown                            | *italics*, **bold**, ***bold italics*** |
+| *italics*, **bold**, ***bold italics*** |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | superscript^2^ / subscript~2~           |
+| superscript^2^ / subscript~2~           |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | ~~strikethrough~~                       |
+| ~~strikethrough~~                       |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | `verbatim code`                         |
+| `verbatim code`                         |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+
+## Encabezados {#headings}
+
++-------------------+-----------------------------------+
+| Sintáxis Markdown | Salida                            |
++===================+===================================+
+| ``` markdown      | # Header 1 {.heading-output}      |
+| # Header 1        |                                   |
+| ```               |                                   |
++-------------------+-----------------------------------+
+| ``` markdown      | ## Header 2 {.heading-output}     |
+| ## Header 2       |                                   |
+| ```               |                                   |
++-------------------+-----------------------------------+
+| ``` markdown      | ### Header 3 {.heading-output}    |
+| ### Header 3      |                                   |
+| ```               |                                   |
++-------------------+-----------------------------------+
+| ``` markdown      | #### Header 4 {.heading-output}   |
+| #### Header 4     |                                   |
+| ```               |                                   |
++-------------------+-----------------------------------+
+| ``` markdown      | ##### Header 5 {.heading-output}  |
+| ##### Header 5    |                                   |
+| ```               |                                   |
++-------------------+-----------------------------------+
+| ``` markdown      | ###### Header 6 {.heading-output} |
+| ###### Header 6   |                                   |
+| ```               |                                   |
++-------------------+-----------------------------------+
+
+```{=html}
+<style type="text/css">
+.heading-output {
+  border-bottom: none;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+</style>
+```
+
+
+## Links e Imágenes {.small}
+
++--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------+
+| Markdown Syntax                                                          | Output                                                                                                              |
++==========================================================================+=====================================================================================================================+
+| ``` markdown                                                             | <https://quarto.org>                                                                                                |
+| <https://quarto.org>                                                     |                                                                                                                     |
+| ```                                                                      |                                                                                                                     |
++--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------+
+| ``` markdown                                                             | [Quarto](https://quarto.org)                                                                                        |
+| [Quarto](https://quarto.org)                                             |                                                                                                                     |
+| ```                                                                      |                                                                                                                     |
++--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------+
+| ``` markdown                                                             | ![Caption](images/ciencia_usm.png){width="20%" fig-alt="Logo USM"}                                                  |
+| ![Caption](images/ciencia_usm.png)                                       |                                                                                                                     |
+| ```                                                                      |                                                                                                                     |
++--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------+
+| ``` markdown                                                             | [![Caption](images/ciencia_usm.png){width="20%"}](https://quarto.org)                                               |
+| [![Caption](images/ciencia_usm.png)](https://quarto.org)                 |                                                                                                                     |
+| ```                                                                      |                                                                                                                     |
++--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------+
+| ``` markdown                                                             | [![Caption](images/ciencia_usm.png "Ciencia abierta"){width="20%" fig-alt="Logo USM"}](https://quarto.org)          |
+| [![Caption](images/ciencia_usm.png)](https://quarto.org "Logo USM")      |                                                                                                                     |
+| ```                                                                      |                                                                                                                     |
++--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------+
+| ``` markdown                                                             | [![](images/ciencia_usm.png){width="20%" fig-alt="Alt text."}](https://quarto.org)                                  |
+| [![](images/ciencia_usm.png){fig-alt="Alt text"}](https://quarto.org)    |                                                                                                                     |
+| ```                                                                      |                                                                                                                     |
++--------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------+
+
+
+
+## Listas {.small}
+
++-----------------------------------+--------------------------------+
+| Sintáxis Markdown                 | Salida                         |
++===================================+================================+
+| ``` markdown                      | -   Lista no ordenada          |
+| * Lista no ordenada               |     -   sub-item 1             |
+|     + sub-item 1                  |     -   sub-item 2             |
+|     + sub-item 2                  |         -   sub-sub-item 1     |
+|         - sub-sub-item 1          |                                |
+| ```                               |                                |
++-----------------------------------+--------------------------------+
+| ``` markdown                      | -   item 2                     |
+| *   item 2                        |                                |
+|                                   |     Continuación (4 spaces)    |
+|     Continuación (4 spaces)       |                                |
+| ```                               |                                |
++-----------------------------------+--------------------------------+
+| ``` markdown                      | 1.  Lista ordenada             |
+| 1. Lista ordenada                 | 2.  item 2                     |
+| 2. item 2                         |     i)  sub-item 1             |
+|     i) sub-item 1                 |         A.  sub-sub-item 1     |
+|          A.  sub-sub-item 1       |                                |
+| ```                               |                                |
++-----------------------------------+--------------------------------+
+
+## Listas
+
++-----------------------------------+--------------------------------+
+| ``` markdown                      | (1) Una lista cuyos números    |
+| (@)  Una lista cuyos números      |                                |
+|                                   | continuan después              |
+| continuan después                 |                                |
+|                                   | (2)  de una interrupción       |
+| (@)  de una interrupción          |                                |
+| ```                               |                                |
++-----------------------------------+--------------------------------+
+| ``` markdown                      | <div>                          |
+| ::: {}                            |                                |
+| 1. Una lista                      | 1.  Una lista                  |
+| :::                               |                                |
+|                                   | </div>                         |
+| ::: {}                            |                                |
+| 1. Seguida de otra lista          | <div>                          |
+| :::                               |                                |
+| ```                               | 1.  Seguida de otra lista      |
+|                                   |                                |
+|                                   | </div>                         |
++-----------------------------------+--------------------------------+
+| ``` markdown                      | término                        |
+| término                           |                                |
+| : definición                      | :   definición                 |
+| ```                               |                                |
++-----------------------------------+--------------------------------+
+
+
+## Tablas
+
+#### Sintáxis Markdown
+
+``` markdown
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+|   12  |  12  |    12   |    12  |
+|  123  |  123 |   123   |   123  |
+|    1  |    1 |     1   |     1  |
+```
+
+#### Output
+
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+|    12 | 12   | 12      |   12   |
+|   123 | 123  | 123     |  123   |
+|     1 | 1    | 1       |   1    |
+
+## Código de fuente
+
+Usamos ```` ``` ```` para delimitar bloques de código:
+
+```` markdown
+```
+código
+```
+````
+
+Podemos agregar un lenguaje para destacar el código:
+
+```` markdown
+```python
+1 + 1
+```
+````
+**Pandoc** ofrece 140 distintos lenguajes para destacar código.
+
+## Guía de referencia
+
+Para una lista exhaustiva de las opciones de formato que tienen los documentos `.qmd` visitar [https://quarto.org/docs/guide/](https://quarto.org/docs/guide/).
+
+## Formatos de salida: Documentos
+
+Los formatos de salida más utilizados para **documentos** creados con `Quarto` son:
+
+- [`HTML`](https://quarto.org/docs/reference/formats/html.html)
+- [`PDF`](https://quarto.org/docs/reference/formats/pdf.html)
+- [`DOCX`](https://quarto.org/docs/reference/formats/docx.html)
+
+. . .
+
+Para cambiar entre estos formatos, basta especificiar la salida deseada en el `YAML`. Otros formatos posibles:
+
+- [`OpenOffice`](https://quarto.org/docs/reference/formats/odt.html)
+- [`ePub`](https://quarto.org/docs/reference/formats/epub.html)
+
+## Formatos de salida: Presentaciones
+
+En Quarto tenemos 3 opciones para presentaciones:
+
+- [`RevealJS`](https://quarto.org/docs/reference/formats/presentations/revealjs.html)
+- [`PowerPoint`](https://quarto.org/docs/reference/formats/presentations/pptx.html)
+- [`Beamer`](https://quarto.org/docs/reference/formats/presentations/beamer.html)
+
+En donde `RevealJS` es el formato que nos entrega más herramientas. (Esta presentación fue hecha utilizando `RevealJS` en `Quarto`)
+
+## Caso práctico
+
+::: box3
+Crearemos un mismo documento en distintos formatos
+:::
+
+[Awesome Quarto](https://github.com/mcanouil/awesome-quarto)
+
+
+# References 
+
+::: {#refs}
+:::
