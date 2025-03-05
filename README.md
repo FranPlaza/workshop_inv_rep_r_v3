@@ -7,11 +7,11 @@
 - **Github Desktop**: [https://desktop.github.com/](https://desktop.github.com/)
 
 ## Grabaciones
-- **Sesión I**: Las grabaciones estarán disponibles después de cada sesión del workshop
-- **Sesión II**: Las grabaciones estarán disponibles después de cada sesión del workshop
-- **Sesión III**: Las grabaciones estarán disponibles después de cada sesión del workshop
-- **Sesión IV**: Las grabaciones estarán disponibles después de cada sesión del workshop
-- **Sesión V**: Las grabaciones estarán disponibles después de cada sesión del workshop
+- **Sesión I**: *La grabación estará disponibles después de la sesión del workshop*
+- **Sesión II**: *La grabación estará disponibles después de la sesión del workshop*
+- **Sesión III**: *La grabación estará disponibles después de la sesión del workshop*
+- **Sesión IV**: *La grabación estará disponibles después de la sesión del workshop*
+- **Sesión V**: *La grabación estará disponibles después de la sesión del workshop*
 
 ## Módulos
 ### Sesión I
