@@ -12,11 +12,11 @@ author:
     orcid: 0000-0001-7522-2327
     email: eloy.alvarado@usm.cl
     affiliations: Universidad Técnica Federico Santa María
-  - name: Francisco Plaza-Vega
+  - name: Francisco Plaza Vega
     orcid: 0000-0001-7577-2775
     email: francisco.plaza.v@usach.cl
     affiliations: Universidad de Santiago de Chile
-date: 07/29/2024
+date: 03/10/2025
 lang: es
 logo: images/logo_usm.png
 bibliography: refs.bib
@@ -614,6 +614,28 @@ La herramienta LearnGitBranching ofrece una introducción interactiva y visual a
 Por ejemplo, Open Science Framework, es una plataforma de código abierto para administración de proyectos de investigación.
 :::
 
+---
+
+## Crear un Nuevo Repositorio
+
+:::{.small}
+Para crear un repositorio local:
+
+1. Hacer clic en `File > New Repository`.
+2. Completar la información que se muestra a continuación:
+
+   - **Name**: `mi-pagina-web`
+   - **Description**: "Repositorio para mi sitio web con Quarto"
+   - **Local Path**: Elige una carpeta en tu computadora donde se almacenará el repositorio.
+   - **Git Ignore Template**: Selecciona `None`.
+   - **License**: Seleccionar algún tipo de licencia o `None` (se puede modificar más adelante).
+
+3. Hacer clic en `Create Repository`.
+
+4. Ahora que el repositorio está creado, se puede modificar y crear archivos.
+:::
+
+---
 
 ## Conectar RStudio y Github
 
@@ -656,6 +678,10 @@ usethis::use_github()
 Esto creará un repositorio con el nombre del proyecto
 
 4. Utilizando la interface en RStudio, podremos mantener el control de versiones.
+
+---
+
+
 
 ## Control de versiones para datos
 
@@ -2748,6 +2774,188 @@ Crearemos un mismo documento en distintos formatos
 :::
 
 [Awesome Quarto](https://github.com/mcanouil/awesome-quarto)
+
+## Páginas web con Quarto {background-color="#212f4b"}
+
+---
+
+:::{.columns}
+:::{.column}
+![](images/rstudio-project-new-directory.png)
+
+:::
+:::{.column}
+![](images/rstudio-project-website.png)
+:::
+:::
+
+---
+
+![](images/rstudio-project-website-options.png){width=300}
+
+:::{.small}
+También se puede crear un website desde la terminal, siguiendo:
+
+```bash
+quarto create-project mi-pagina-web --type website
+```
+:::
+
+---
+
+Lo anterior generará una estructura de carpetas como la siguiente:
+
+```
+mi-pagina-web/
+├── _quarto.yml
+├── index.qmd
+└── about.qmd
+```
+- **`_quarto.yml`**: Archivo de configuración del proyecto.
+- **`index.qmd`**: Archivo principal del sitio web.
+- **`about.qmd`**: Página adicional para el sitio.
+
+---
+
+### Archivo `_quarto.yml`
+
+:::{.small}
+El archivo `_quarto.yml` define configuraciones para personalizar el sitio web:
+
+
+:::{.columns}
+
+:::{.column}
+
+```yaml
+project:
+  type: website
+  title: "Página Web con Quarto"
+  author: "Nombre"
+  description: "sitio web creado con Quarto"
+  
+website:
+  navbar:
+    right:
+      - text: "Inicio"
+        href: index.qmd
+      - text: "Acerca de"
+        href: about.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-location: left
+```
+:::
+
+:::{.column}
+- **title**: El título del sitio.
+- **navbar**: Barra de navegación con enlaces.
+- **theme**: Se puede cambiar el tema (e.g., `cosmo`, `flatly`, `darkly`).
+:::
+:::
+:::
+
+---
+
+### Contenido en `index.qmd`
+
+:::{.small}
+Abrir el archivo `index.qmd` y añadimos el siguiente contenido:
+
+```markdown
+---
+title: "Mi Página Web"
+---
+
+# ¡Hola, Mundo!
+
+Esta es una página web simple creada con Quarto para el 3er Workshop de Investigación Reproducible.
+
+## Sección 1: Introducción
+
+Quarto te permite crear documentos y sitios web de forma rápida y sencilla.
+
+## Sección 2: Características
+
+- Código reproducible
+- Fácil de publicar en GitHub Pages
+- Compatible con múltiples lenguajes
+```
+Luego renderizar el documento
+:::
+
+---
+
+### Contenido en `about.qmd`
+
+:::{.small}
+
+```
+---
+title: "Workshop"
+about:
+  template: jolla
+  image: profile.jpg
+  links:
+    - icon: twitter
+      text: twitter
+      href: https://twitter.com
+    - icon: github
+      text: Github
+      href: https://github.com
+---
+
+El 3er Workshop: Investigación Reproducible con R es una iniciativa dirigida a la comunidad científica, académica y de postgrado diseñada para fortalecer las competencias en transparencia, replicabilidad y buenas prácticas en la investigación científica. 
+
+## Fecha y lugar de realización
+
+Se realizará desde el lunes 10 de marzo hasta el viernes 14 de marzo, en modalidad 100% online . El workshop consta de cinco módulos en cinco sesiones de dos horas cada una con un total de diez horas de formación.
+
+
+```
+:::
+
+</br>
+
+:::{.callout-tip title="Templates"}
+Quarto incluye 5 templates para este tipo de página: `jolla`, `trestles`, `solana`, `marquee`, `broadside`.
+:::
+
+---
+
+### Configurar GitHub Pages
+
+:::{.small}
+
+1. Crear un repositorio llamado `nombre-usuario.github.io`. Donde `nombre-usuario` sea tu nombre de usuario de GitHub.
+2. Ir a **Settings** > **Pages**.
+3. Seleccionar la rama `main` y la carpeta `/ (root)`, o alguna otra carpeta que sea definida para guardar los archivos del sitio web.
+4. Guardar los cambios.
+5. Luego puedes clonar el repositorio a alguna carpeta local y comenzar a trabajar. Debe contener algún archivo `index.html` para funcionar
+
+El sitio web debería estar disponible en:
+`https://usuario.github.io/mi-pagina-web`
+:::
+
+---
+
+:::{.callout-note title="Guía de referencia"}
+Guía de referencia para [Github Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)
+:::
+
+:::{.callout-tip title="Para modificar la carpeta de salida del sitio web"}
+En el archivo `_quarto.yml`:
+
+```
+project:
+  type: website
+  output-dir: docs
+```
+
+:::
 
 
 # References 
