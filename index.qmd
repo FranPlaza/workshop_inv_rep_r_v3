@@ -354,7 +354,7 @@ Vamos a hablar un poco respecto a herramientas para la investigación reproducib
 La imagen muestra la clasificacion de los distintos tipos de investigación científica en un rango que va desde "No reproducible" hasta el "Estándar de oro". En el extremo izquierdo del espectro se encuentra sólo la publicación, indicando un nivel bajo de reproducibilidad. A medida que avanzamos en el espectro, se agregan componentes adicionales que mejoran la reproducibilidad: "Código", "Código y datos", y luego "Código y datos vinculados y ejecutables". El "Estándar de oro" al final del espectro muestra la "Replicación completa", implicando la máxima reproducibilidad. Este espectro destaca la importancia de compartir no solo las publicaciones, sino también el código y los datos subyacentes para permitir la verificación y replicación completas de los resultados científicos.
 :::
 
-# [Repositorio para este curso](https://github.com/FranPlaza/workshop_inv_rep_r_v2)
+# [Repositorio para este curso](https://github.com/FranPlaza/workshop_inv_rep_r_v3)
 
 # Sofware necesarios
 
