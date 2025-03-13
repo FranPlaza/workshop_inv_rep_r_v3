@@ -7,11 +7,21 @@ library(tidyverse)
 library(tidymodels)
 
 # Datos ----
-# Carga de datos del proyecto TidyTuesday para la semana 39 del año 2020.
+
+# Tenemos dos opciones:
+# Opción 1: Carga de datos del proyecto TidyTuesday para la semana 39 del año 2020.
 tt_data <- tidytuesdayR::tt_load(2020, week = 39)
 # Uso de skim() para obtener un resumen rápido de los datos.
 tt_data$members |> 
   skimr::skim() 
+
+# Opción 2:
+# Cargar directamente las bases de datos
+
+members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-09-22/members.csv')
+expeditions <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-09-22/expeditions.csv')
+peaks <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-09-22/peaks.csv')
+
 
 ## Climbers DF ----
 # Creación de un dataframe 'climbers_df' seleccionando y filtrando las columnas relevantes.
